@@ -2,7 +2,6 @@ package lists
 
 import (
 	"errors"
-	"fmt"
 )
 
 type StringSlice []string
@@ -157,15 +156,19 @@ func (s StringSlice) Compress() StringSlice {
 
 func (s StringSlice) Pack() NestedSlice {
 	var result NestedSlice
-	var group = StringSlice{s[0]}
-
+	var group = make(StringSlice, 0)
 	for _, item := range s {
-		if last, _ := group.LastElement(); item != last {
-			group = StringSlice{item}
-		} else {
+		if len(group) == 0 {
 			group = append(group, item)
+		} else if len(group) > 0 {
+			if last := group[len(group)-1]; item != last {
+				group = append(group, item)
+			}
 		}
-		fmt.Println(group)
+		// } else {
+		// 	result = append(result, group)
+		// 	group = make(StringSlice, 0)
+		// }
 	}
 	return result
 }
