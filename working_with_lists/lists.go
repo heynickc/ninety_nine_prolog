@@ -2,6 +2,7 @@ package lists
 
 import (
 	"errors"
+	"fmt"
 )
 
 type StringSlice []string
@@ -153,6 +154,21 @@ func (s StringSlice) Compress() StringSlice {
 // Example:
 // ?- pack([a,a,a,a,b,c,c,a,a,d,e,e,e,e],X).
 // X = [[a,a,a,a],[b],[c,c],[a,a],[d],[e,e,e,e]]
+
+func (s StringSlice) Pack() NestedSlice {
+	var result NestedSlice
+	var group = StringSlice{s[0]}
+
+	for _, item := range s {
+		if last, _ := group.LastElement(); item != last {
+			group = StringSlice{item}
+		} else {
+			group = append(group, item)
+		}
+		fmt.Println(group)
+	}
+	return result
+}
 
 // P10 (*) Run-length encoding of a list.
 // Use the result of problem P09 to implement the so-called run-length encoding data compression method. Consecutive duplicates of elements are encoded as terms [N,E] where N is the number of duplicates of the element E.

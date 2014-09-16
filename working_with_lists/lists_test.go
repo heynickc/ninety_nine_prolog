@@ -304,7 +304,18 @@ func BenchmarkCompress(b *testing.B) {
 // X = [[a,a,a,a],[b],[c,c],[a,a],[d],[e,e,e,e]]
 
 var TestPairsPack = []TestPairStringSlice{
-	{StringSlice{"a", "a", "a", "a", "b", "c", "c", "a", "a", "d", "e", "e", "e", "e"}, NestedSlice{NestedSlice{"a", "a", "a", "a"}, NestedSlice{"b"}}},
+	{StringSlice{"a", "a", "a", "a", "b", "c", "c", "a", "a", "d", "e", "e", "e", "e"}, NestedSlice{NestedSlice{"a", "a", "a", "a"}, NestedSlice{"b"}, NestedSlice{"c", "c"}, NestedSlice{"a", "a"}, NestedSlice{"d"}, NestedSlice{"e", "e", "e", "e"}}},
+}
+
+func TestPack(t *testing.T) {
+	for _, pair := range TestPairsPack {
+		result := pair.In.Pack()
+		for i := 0; i < len(result); i++ {
+			if result[i] != pair.Out.(NestedSlice)[i] {
+				t.Errorf("Expected slice[%v] to be %v but got %v", i, pair.Out.(NestedSlice)[i], result[i])
+			}
+		}
+	}
 }
 
 // P10 (*) Run-length encoding of a list.
