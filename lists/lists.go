@@ -145,10 +145,10 @@ func (n NestedSlice) Flatten() StringSlice {
 func (s StringSlice) Compress() StringSlice {
 	var result StringSlice
 	for _, item := range s {
-		if len(result) > 0 {
-			if last := result[len(result)-1]; item != last {
-				result = append(result, item)
-			}
+		if len(result) == 0 {
+			result = append(result, item)
+		} else if last := result[len(result)-1]; item != last {
+			result = append(result, item)
 		}
 	}
 	return result
@@ -190,20 +190,10 @@ func (s StringSlice) Pack() []StringSlice {
 
 func (s StringSlice) Encode() EncodedSlice {
 	var result EncodedSlice
-	var group StringSlice
-	for i, item := range s {
-		if len(group) == 0 {
-			group = append(group, item)
-		} else if last := group[len(group)-1]; item == last {
-			group = append(group, item)
-			if i == len(s)-1 {
-				result = append(result, group.CompressCount())
-			}
-		} else if last := group[len(group)-1]; item != last {
-			result = append(result, group.CompressCount())
-			group = make(StringSlice, 0)
-			group = append(group, item)
-		}
+	var compressed []StringSlice
+	compressed = s.Pack()
+	for _, item := range compressed {
+		result = append(result, item.CompressCount())
 	}
 	return result
 }

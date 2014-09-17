@@ -2,6 +2,7 @@ package lists
 
 import (
 	"fmt"
+	"reflect"
 	"testing"
 )
 
@@ -197,10 +198,8 @@ func BenchmarkLength(b *testing.B) {
 func TestRotate(t *testing.T) {
 	for i, pair := range TestPairsRotate {
 		result := pair.In.Rotate(i+1, pair.In.Length())
-		for i := 0; i < pair.In.Length(); i++ {
-			if result[i] != pair.Out.(StringSlice)[i] {
-				t.Errorf("Expected slice[%v] to be %v but got %v", i, pair.Out.(StringSlice)[i], result[i])
-			}
+		if !reflect.DeepEqual(result, pair.Out) {
+			t.Errorf("Expected %v to be %v", result, pair.Out)
 		}
 	}
 }
@@ -216,10 +215,8 @@ func BenchmarkRotate(b *testing.B) {
 func TestReverse(t *testing.T) {
 	for _, pair := range TestPairsReverse {
 		result := pair.In.Reverse()
-		for i := 0; i < result.Length(); i++ {
-			if result[i] != pair.Out.(StringSlice)[i] {
-				t.Errorf("Expected slice[%v] to be %v but got %v", i, pair.Out.(StringSlice)[i], result[i])
-			}
+		if !reflect.DeepEqual(result, pair.Out) {
+			t.Errorf("Expected %v to be %v", result, pair.Out)
 		}
 	}
 }
@@ -259,10 +256,8 @@ func BenchmarkIsPalindrome(b *testing.B) {
 func TestFlatten(t *testing.T) {
 	for _, pair := range TestPairsFlatten {
 		result := pair.In.Flatten()
-		for i := 0; i < len(pair.In); i++ {
-			if result[i] != pair.Out.(StringSlice)[i] {
-				t.Errorf("Expected slice[%v] to be %v but got %v", i, pair.Out.(StringSlice)[i], pair.In[i])
-			}
+		if !reflect.DeepEqual(result, pair.Out) {
+			t.Errorf("Expected %v to be %v", result, pair.Out)
 		}
 	}
 }
@@ -283,10 +278,8 @@ func BenchmarkFlatten(b *testing.B) {
 func TestCompress(t *testing.T) {
 	for _, pair := range TestPairsCompress {
 		result := pair.In.Compress()
-		for i := 0; i < len(result); i++ {
-			if result[i] != pair.Out.(StringSlice)[i] {
-				t.Errorf("Expected slice[%v] to be %v but got %v", i, pair.Out.(StringSlice)[i], result[i])
-			}
+		if !reflect.DeepEqual(result, pair.Out) {
+			t.Errorf("Expected %v to be %v", result, pair.Out)
 		}
 	}
 }
@@ -311,12 +304,8 @@ var TestPairsPack = []TestPairStringSlice{
 func TestPack(t *testing.T) {
 	for _, pair := range TestPairsPack {
 		result := pair.In.Pack()
-		for i, group := range result {
-			for j, item := range group {
-				if item != pair.Out.([]StringSlice)[i][j] {
-					t.Errorf("Expected slice[%v] to be %v but got %v", j, pair.Out.(NestedSlice)[i].(StringSlice)[j], item)
-				}
-			}
+		if !reflect.DeepEqual(result, pair.Out) {
+			t.Errorf("Expected %v to be %v", result, pair.Out)
 		}
 	}
 }
