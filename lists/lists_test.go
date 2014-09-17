@@ -1,7 +1,6 @@
 package lists
 
 import (
-	"fmt"
 	"testing"
 )
 
@@ -311,13 +310,13 @@ var TestPairsPack = []TestPairStringSlice{
 func TestPack(t *testing.T) {
 	for _, pair := range TestPairsPack {
 		result := pair.In.Pack()
-		fmt.Println(result)
-		// for i, group := range result {
-		// 	for j, item := range group.(StringSlice) {
-		// 		fmt.Printf("result %v\n", item)
-		// 		fmt.Println(pair.Out.(NestedSlice)[i].(StringSlice)[j])
-		// 	}
-		// }
+		for i, group := range result {
+			for j, item := range group.(StringSlice) {
+				if item != pair.Out.(NestedSlice)[i].(StringSlice)[j] {
+					t.Errorf("Expected slice[%v] to be %v but got %v", j, pair.Out.(NestedSlice)[i].(StringSlice)[j], item)
+				}
+			}
+		}
 	}
 }
 

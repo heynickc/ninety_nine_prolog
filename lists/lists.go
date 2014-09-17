@@ -2,7 +2,6 @@ package lists
 
 import (
 	"errors"
-	"fmt"
 )
 
 type StringSlice []string
@@ -95,8 +94,8 @@ func (s StringSlice) Reverse() StringSlice {
 func (s StringSlice) IsPalindrome() bool {
 	var i, mid, last int
 	i = 0
-	mid = s.Length() / 2
-	last = s.Length() - 1
+	mid = len(s) / 2
+	last = len(s) - 1
 	for i < mid {
 		if s[i] != s[last-i] {
 			return false
@@ -141,8 +140,10 @@ func (n NestedSlice) Flatten() StringSlice {
 func (s StringSlice) Compress() StringSlice {
 	var result StringSlice
 	for _, item := range s {
-		if last, _ := result.LastElement(); item != last {
-			result = append(result, item)
+		if len(result) > 0 {
+			if last := result[len(result)-1]; item != last {
+				result = append(result, item)
+			}
 		}
 	}
 	return result
@@ -158,19 +159,19 @@ func (s StringSlice) Compress() StringSlice {
 func (s StringSlice) Pack() NestedSlice {
 	var result NestedSlice
 	var group StringSlice
-	for _, item := range s {
+	for i, item := range s {
 		if len(group) == 0 {
 			group = append(group, item)
-		} else {
-			if last := group[len(group)-1]; item != last {
-				group = append(group, item)
+		} else if last := group[len(group)-1]; item == last {
+			group = append(group, item)
+			if i == len(s)-1 {
+				result = append(result, group)
 			}
+		} else if last := group[len(group)-1]; item != last {
+			result = append(result, group)
+			group = make(StringSlice, 0)
+			group = append(group, item)
 		}
-		// } else {
-		// 	result = append(result, group)
-		// 	group = make(StringSlice, 0)
-		// }
-		fmt.Println(group)
 	}
 	return result
 }
