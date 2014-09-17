@@ -190,7 +190,32 @@ func (s StringSlice) Pack() []StringSlice {
 
 func (s StringSlice) Encode() EncodedSlice {
 	var result EncodedSlice
+	var group StringSlice
+	for i, item := range s {
+		if len(group) == 0 {
+			group = append(group, item)
+		} else if last := group[len(group)-1]; item == last {
+			group = append(group, item)
+			if i == len(s)-1 {
+				result = append(result, group.CompressCount())
+			}
+		} else if last := group[len(group)-1]; item != last {
+			result = append(result, group.CompressCount())
+			group = make(StringSlice, 0)
+			group = append(group, item)
+		}
+	}
 	return result
+}
+
+func (s StringSlice) CompressCount() EncodedPair {
+	var char string
+	var count int
+	char = s[0]
+	for i := 0; i < len(s); i++ {
+		count++
+	}
+	return EncodedPair{count, char}
 }
 
 // P11 (*) Modified run-length encoding.

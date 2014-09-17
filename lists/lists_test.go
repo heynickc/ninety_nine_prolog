@@ -339,7 +339,7 @@ var TestPairsEncode = []TestPairStringSlice{
 }
 
 func TestEncode(t *testing.T) {
-	fmt.Println(TestPairsEncode[0].Out)
+	fmt.Println(TestPairsEncode[0].In.Encode())
 }
 
 // P11 (*) Modified run-length encoding.
