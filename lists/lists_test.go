@@ -304,7 +304,7 @@ func BenchmarkCompress(b *testing.B) {
 // X = [[a,a,a,a],[b],[c,c],[a,a],[d],[e,e,e,e]]
 
 var TestPairsPack = []TestPairStringSlice{
-	{StringSlice{"a", "a", "a", "a", "b", "c", "c", "a", "a", "d", "e", "e", "e", "e"}, NestedSlice{StringSlice{"a", "a", "a", "a"}, StringSlice{"b"}, StringSlice{"c", "c"}, StringSlice{"a", "a"}, StringSlice{"d"}, StringSlice{"e", "e", "e", "e"}}},
+	{StringSlice{"a", "a", "a", "a", "b", "c", "c", "a", "a", "d", "e", "e", "e", "e"}, []StringSlice{{"a", "a", "a", "a"}, {"b"}, {"c", "c"}, {"a", "a"}, {"d"}, {"e", "e", "e", "e"}}},
 }
 
 func TestPack(t *testing.T) {
@@ -312,11 +312,17 @@ func TestPack(t *testing.T) {
 		result := pair.In.Pack()
 		for i, group := range result {
 			for j, item := range group.(StringSlice) {
-				if item != pair.Out.(NestedSlice)[i].(StringSlice)[j] {
+				if item != pair.Out.([]StringSlice)[i][j] {
 					t.Errorf("Expected slice[%v] to be %v but got %v", j, pair.Out.(NestedSlice)[i].(StringSlice)[j], item)
 				}
 			}
 		}
+	}
+}
+
+func BenchmarkPack(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		TestPairsCompress[0].In.Pack()
 	}
 }
 
@@ -326,6 +332,10 @@ func TestPack(t *testing.T) {
 // Example:
 // ?- encode([a,a,a,a,b,c,c,a,a,d,e,e,e,e],X).
 // X = [[4,a],[1,b],[2,c],[2,a],[1,d][4,e]]
+
+var TestPairsRunLengthEncode = []TestPairStringSlice{
+	{StringSlice{"a", "a", "a", "a", "b", "c", "c", "a", "a", "d", "e", "e", "e", "e"}, EncodedSlice{{1, "a"}}},
+}
 
 // P11 (*) Modified run-length encoding.
 // Modify the result of problem P10 in such a way that if an element has no duplicates it is simply copied into the result list. Only elements with duplicates are transferred as [N,E] terms.
