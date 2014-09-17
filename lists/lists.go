@@ -5,7 +5,7 @@ import (
 )
 
 type StringSlice []string
-type NestedSlice []interface{}
+type GenericSlice []interface{}
 type EncodedPair struct {
 	int
 	string
@@ -122,13 +122,13 @@ func (s StringSlice) IsPalindrome() bool {
 // http://rosettacode.org/wiki/Flatten_a_list#Go
 // Uses type switching http://golang.org/doc/effective_go.html#type_switch
 
-func (n NestedSlice) Flatten() StringSlice {
+func (n GenericSlice) Flatten() StringSlice {
 	var result []string
 	for _, s := range n {
 		switch i := s.(type) {
 		case string:
 			result = append(result, i)
-		case NestedSlice:
+		case GenericSlice:
 			result = append(result, i.Flatten()...)
 		}
 	}

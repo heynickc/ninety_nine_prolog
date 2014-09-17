@@ -11,8 +11,8 @@ type TestPairStringSlice struct {
 	Out interface{}
 }
 
-type TestPairNestedSlice struct {
-	In  NestedSlice
+type TestPairGenericSlice struct {
+	In  GenericSlice
 	Out interface{}
 }
 
@@ -87,8 +87,8 @@ var TestPairsPalindrome = []TestPairStringSlice{
 	{StringSlice{"a", "b"}, false},
 }
 
-var TestPairsFlatten = []TestPairNestedSlice{
-	{NestedSlice{NestedSlice{"a", NestedSlice{"b", NestedSlice{"c", "d"}, "e"}}}, StringSlice{"a", "b", "c", "d", "e"}},
+var TestPairsFlatten = []TestPairGenericSlice{
+	{GenericSlice{GenericSlice{"a", GenericSlice{"b", GenericSlice{"c", "d"}, "e"}}}, StringSlice{"a", "b", "c", "d", "e"}},
 }
 
 var TestPairsCompress = []TestPairStringSlice{
@@ -324,11 +324,16 @@ func BenchmarkPack(b *testing.B) {
 // X = [[4,a],[1,b],[2,c],[2,a],[1,d][4,e]]
 
 var TestPairsEncode = []TestPairStringSlice{
-	{StringSlice{"a", "a", "a", "a", "b", "c", "c", "a", "a", "d", "e", "e", "e", "e"}, EncodedSlice{{4, "a"}, {1, "b"}, {2, "c"}, {2, "a"}, {1, "d"}}},
+	{StringSlice{"a", "a", "a", "a", "b", "c", "c", "a", "a", "d", "e", "e", "e", "e"}, EncodedSlice{{4, "a"}, {1, "b"}, {2, "c"}, {2, "a"}, {1, "d"}, {4, "e"}}},
 }
 
 func TestEncode(t *testing.T) {
-	fmt.Println(TestPairsEncode[0].In.Encode())
+	for _, pair := range TestPairsEncode {
+		result := pair.In.Encode()
+		if !reflect.DeepEqual(result, pair.Out) {
+			t.Errorf("Expected %v to be %v", result, pair.Out)
+		}
+	}
 }
 
 // P11 (*) Modified run-length encoding.
@@ -337,6 +342,14 @@ func TestEncode(t *testing.T) {
 // Example:
 // ?- encode_modified([a,a,a,a,b,c,c,a,a,d,e,e,e,e],X).
 // X = [[4,a],b,[2,c],[2,a],d,[4,e]]
+
+var TestPairsEncodeModified = []TestPairStringSlice{
+	{StringSlice{"a", "a", "a", "a", "b", "c", "c", "a", "a", "d", "e", "e", "e", "e"}, GenericSlice{EncodedPair{4, "a"}, "b", EncodedPair{2, "c"}, EncodedPair{2, "a"}, "d", EncodedPair{4, "e"}}},
+}
+
+func TestEncodeModified(t *testing.T) {
+	fmt.Println(TestPairsEncodeModified[0].Out)
+}
 
 // P12 (**) Decode a run-length encoded list.
 // Given a run-length code list generated as specified in problem P11. Construct its uncompressed version.
