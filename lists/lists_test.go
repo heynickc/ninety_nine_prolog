@@ -1,7 +1,6 @@
 package lists
 
 import (
-	"fmt"
 	"reflect"
 	"testing"
 )
@@ -348,7 +347,12 @@ var TestPairsEncodeModified = []TestPairStringSlice{
 }
 
 func TestEncodeModified(t *testing.T) {
-	fmt.Println(TestPairsEncodeModified[0].Out)
+	for _, pair := range TestPairsEncodeModified {
+		result := pair.In.EncodeModified()
+		if !reflect.DeepEqual(result, pair.Out) {
+			t.Errorf("Expected %v to be %v", result, pair.Out)
+		}
+	}
 }
 
 // P12 (**) Decode a run-length encoded list.
@@ -356,6 +360,8 @@ func TestEncodeModified(t *testing.T) {
 
 // P13 (**) Run-length encoding of a list (direct solution).
 // Implement the so-called run-length encoding data compression method directly. I.e. don't explicitly create the sublists containing the duplicates, as in problem P09, but only count them. As in problem P11, simplify the result list by replacing the singleton terms [1,X] by X.
+
+// "Direct" means to not use Pack() or Compress()
 
 // Example:
 // ?- encode_direct([a,a,a,a,b,c,c,a,a,d,e,e,e,e],X).

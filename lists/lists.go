@@ -193,12 +193,12 @@ func (s StringSlice) Encode() EncodedSlice {
 	var compressed []StringSlice
 	compressed = s.Pack()
 	for _, item := range compressed {
-		result = append(result, item.CompressCount())
+		result = append(result, item.EncodePair())
 	}
 	return result
 }
 
-func (s StringSlice) CompressCount() EncodedPair {
+func (s StringSlice) EncodePair() EncodedPair {
 	var char string
 	var count int
 	char = s[0]
@@ -214,6 +214,20 @@ func (s StringSlice) CompressCount() EncodedPair {
 // Example:
 // ?- encode_modified([a,a,a,a,b,c,c,a,a,d,e,e,e,e],X).
 // X = [[4,a],b,[2,c],[2,a],d,[4,e]]
+
+func (s StringSlice) EncodeModified() GenericSlice {
+	var result GenericSlice
+	var compressed []StringSlice
+	compressed = s.Pack()
+	for _, item := range compressed {
+		if len(item) == 1 {
+			result = append(result, item[0])
+		} else if len(item) > 1 {
+			result = append(result, item.EncodePair())
+		}
+	}
+	return result
+}
 
 // P12 (**) Decode a run-length encoded list.
 // Given a run-length code list generated as specified in problem P11. Construct its uncompressed version.
