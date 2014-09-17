@@ -161,8 +161,8 @@ func (s StringSlice) Compress() StringSlice {
 // ?- pack([a,a,a,a,b,c,c,a,a,d,e,e,e,e],X).
 // X = [[a,a,a,a],[b],[c,c],[a,a],[d],[e,e,e,e]]
 
-func (s StringSlice) Pack() NestedSlice {
-	var result NestedSlice
+func (s StringSlice) Pack() []StringSlice {
+	var result []StringSlice
 	var group StringSlice
 	for i, item := range s {
 		if len(group) == 0 {
@@ -187,6 +187,11 @@ func (s StringSlice) Pack() NestedSlice {
 // Example:
 // ?- encode([a,a,a,a,b,c,c,a,a,d,e,e,e,e],X).
 // X = [[4,a],[1,b],[2,c],[2,a],[1,d][4,e]]
+
+func (s StringSlice) Encode() EncodedSlice {
+	var result EncodedSlice
+	return result
+}
 
 // P11 (*) Modified run-length encoding.
 // Modify the result of problem P10 in such a way that if an element has no duplicates it is simply copied into the result list. Only elements with duplicates are transferred as [N,E] terms.

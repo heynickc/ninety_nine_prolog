@@ -1,6 +1,7 @@
 package lists
 
 import (
+	"fmt"
 	"testing"
 )
 
@@ -311,7 +312,7 @@ func TestPack(t *testing.T) {
 	for _, pair := range TestPairsPack {
 		result := pair.In.Pack()
 		for i, group := range result {
-			for j, item := range group.(StringSlice) {
+			for j, item := range group {
 				if item != pair.Out.([]StringSlice)[i][j] {
 					t.Errorf("Expected slice[%v] to be %v but got %v", j, pair.Out.(NestedSlice)[i].(StringSlice)[j], item)
 				}
@@ -333,8 +334,12 @@ func BenchmarkPack(b *testing.B) {
 // ?- encode([a,a,a,a,b,c,c,a,a,d,e,e,e,e],X).
 // X = [[4,a],[1,b],[2,c],[2,a],[1,d][4,e]]
 
-var TestPairsRunLengthEncode = []TestPairStringSlice{
-	{StringSlice{"a", "a", "a", "a", "b", "c", "c", "a", "a", "d", "e", "e", "e", "e"}, EncodedSlice{{1, "a"}}},
+var TestPairsEncode = []TestPairStringSlice{
+	{StringSlice{"a", "a", "a", "a", "b", "c", "c", "a", "a", "d", "e", "e", "e", "e"}, EncodedSlice{{4, "a"}, {1, "b"}, {2, "c"}, {2, "a"}, {1, "d"}}},
+}
+
+func TestEncode(t *testing.T) {
+	fmt.Println(TestPairsEncode[0].Out)
 }
 
 // P11 (*) Modified run-length encoding.
