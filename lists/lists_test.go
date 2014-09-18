@@ -1,7 +1,6 @@
 package lists
 
 import (
-	"fmt"
 	"reflect"
 	"testing"
 )
@@ -376,7 +375,12 @@ var TestPairsDecode = []TestPairGenericSlice{
 }
 
 func TestDecode(t *testing.T) {
-	fmt.Println(TestPairsDecode[0].In.Decode())
+	for _, pair := range TestPairsDecode {
+		result := pair.In.Decode()
+		if !reflect.DeepEqual(result, pair.Out) {
+			t.Errorf("Expected %v to be %v", result, pair.Out)
+		}
+	}
 }
 
 // P13 (**) Run-length encoding of a list (direct solution).

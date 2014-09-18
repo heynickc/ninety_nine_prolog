@@ -2,14 +2,13 @@ package lists
 
 import (
 	"errors"
-	"fmt"
 )
 
 type StringSlice []string
 type GenericSlice []interface{}
 type EncodedPair struct {
-	int
-	string
+	c int
+	s string
 }
 type EncodedSlice []EncodedPair
 
@@ -238,9 +237,11 @@ func (g GenericSlice) Decode() StringSlice {
 	for _, item := range g {
 		switch i := item.(type) {
 		case string:
-			fmt.Printf("%v string \n", i)
+			result = append(result, i)
 		case EncodedPair:
-			fmt.Printf("%v EncodedPair \n", i)
+			for j := 0; j < i.c; j++ {
+				result = append(result, i.s)
+			}
 		}
 	}
 	return result
