@@ -393,7 +393,7 @@ func TestDecode(t *testing.T) {
 // X = [[4,a],b,[2,c],[2,a],d,[4,e]]
 
 var TestPairsEncodeDirect = []TestPairStringSlice{
-	{StringSlice{"a", "a", "a", "a", "b", "c", "c", "a", "a", "d", "e", "e", "e", "e"}, EncodedSlice{{4, "a"}, {1, "b"}, {2, "c"}, {2, "a"}, {1, "d"}, {4, "e"}}},
+	{StringSlice{"a", "a", "a", "a", "b", "c", "c", "a", "a", "d", "e", "e", "e", "e"}, []EncodedPair{{4, "a"}, {1, "b"}, {2, "c"}, {2, "a"}, {1, "d"}, {4, "e"}}},
 }
 
 func TestEncodeDirect(t *testing.T) {

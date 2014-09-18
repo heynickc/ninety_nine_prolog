@@ -10,7 +10,6 @@ type EncodedPair struct {
 	c int
 	s string
 }
-type EncodedSlice []EncodedPair
 
 // P01 (*) Find the last element of a list.
 // Example:
