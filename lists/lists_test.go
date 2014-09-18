@@ -1,6 +1,7 @@
 package lists
 
 import (
+	"fmt"
 	"reflect"
 	"testing"
 )
@@ -399,6 +400,7 @@ var TestPairsEncodeDirect = []TestPairStringSlice{
 func TestEncodeDirect(t *testing.T) {
 	for _, pair := range TestPairsEncodeDirect {
 		result := pair.In.EncodeDirect()
+		fmt.Println(result)
 		if !reflect.DeepEqual(result, pair.Out) {
 			t.Errorf("Expected %v to be %v", result, pair.Out)
 		}
