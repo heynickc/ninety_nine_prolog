@@ -253,22 +253,26 @@ func (g GenericSlice) Decode() StringSlice {
 // ?- encode_direct([a,a,a,a,b,c,c,a,a,d,e,e,e,e],X).
 // X = [[4,a],b,[2,c],[2,a],d,[4,e]]
 
-func (s StringSlice) EncodeDirect() []StringSlice {
-	var result []StringSlice
+func (s StringSlice) EncodeDirect() []EncodedPair {
+	var packed []StringSlice
 	var group StringSlice
+	var result []EncodedPair
 	for i, item := range s {
 		if len(group) == 0 {
 			group = append(group, item)
 		} else if last := group[len(group)-1]; item == last {
 			group = append(group, item)
 			if i == len(s)-1 {
-				result = append(result, group)
+				packed = append(packed, group)
 			}
 		} else if last := group[len(group)-1]; item != last {
-			result = append(result, group)
+			packed = append(packed, group)
 			group = make(StringSlice, 0)
 			group = append(group, item)
 		}
+	}
+	for _, item := range packed {
+		result = append(result, EncodedPair{len(item), item[0]})
 	}
 	return result
 }
