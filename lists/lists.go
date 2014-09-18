@@ -262,7 +262,17 @@ func (s StringSlice) EncodeDirect() []EncodedPair {
 		} else if last := group[len(group)-1]; item == last {
 			group = append(group, item)
 			if i == len(s)-1 {
-				result = append(result, group.EncodePair())
+
+				var encodedPair EncodedPair
+				var char string
+				var count int
+				char = s[0]
+				for i := 0; i < len(s); i++ {
+					count++
+				}
+				encodedPair = EncodedPair{count, char}
+
+				result = append(result, encodedPair)
 			}
 		} else if last := group[len(group)-1]; item != last {
 			result = append(result, group.EncodePair())
