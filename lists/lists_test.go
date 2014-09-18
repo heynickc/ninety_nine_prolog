@@ -1,6 +1,7 @@
 package lists
 
 import (
+	"fmt"
 	"reflect"
 	"testing"
 )
@@ -335,6 +336,12 @@ func TestEncode(t *testing.T) {
 	}
 }
 
+func BenchmarkEncode(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		TestPairsEncode[0].In.Encode()
+	}
+}
+
 // P11 (*) Modified run-length encoding.
 // Modify the result of problem P10 in such a way that if an element has no duplicates it is simply copied into the result list. Only elements with duplicates are transferred as [N,E] terms.
 
@@ -355,8 +362,22 @@ func TestEncodeModified(t *testing.T) {
 	}
 }
 
+func BenchmarkEncodeModified(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		TestPairsEncode[0].In.EncodeModified()
+	}
+}
+
 // P12 (**) Decode a run-length encoded list.
 // Given a run-length code list generated as specified in problem P11. Construct its uncompressed version.
+
+var TestPairsDecode = []TestPairGenericSlice{
+	{GenericSlice{EncodedPair{4, "a"}, "b", EncodedPair{2, "c"}, EncodedPair{2, "a"}, "d", EncodedPair{4, "e"}}, StringSlice{"a", "a", "a", "a", "b", "c", "c", "a", "a", "d", "e", "e", "e", "e"}},
+}
+
+func TestDecode(t *testing.T) {
+	fmt.Println(TestPairsDecode[0].In.Decode())
+}
 
 // P13 (**) Run-length encoding of a list (direct solution).
 // Implement the so-called run-length encoding data compression method directly. I.e. don't explicitly create the sublists containing the duplicates, as in problem P09, but only count them. As in problem P11, simplify the result list by replacing the singleton terms [1,X] by X.

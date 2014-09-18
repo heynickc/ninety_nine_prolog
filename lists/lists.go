@@ -2,6 +2,7 @@ package lists
 
 import (
 	"errors"
+	"fmt"
 )
 
 type StringSlice []string
@@ -231,6 +232,19 @@ func (s StringSlice) EncodeModified() GenericSlice {
 
 // P12 (**) Decode a run-length encoded list.
 // Given a run-length code list generated as specified in problem P11. Construct its uncompressed version.
+
+func (g GenericSlice) Decode() StringSlice {
+	var result StringSlice
+	for _, item := range g {
+		switch i := item.(type) {
+		case string:
+			fmt.Printf("%v string \n", i)
+		case EncodedPair:
+			fmt.Printf("%v EncodedPair \n", i)
+		}
+	}
+	return result
+}
 
 // P13 (**) Run-length encoding of a list (direct solution).
 // Implement the so-called run-length encoding data compression method directly. I.e. don't explicitly create the sublists containing the duplicates, as in problem P09, but only count them. As in problem P11, simplify the result list by replacing the singleton terms [1,X] by X.
