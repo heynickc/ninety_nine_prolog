@@ -323,7 +323,7 @@ func BenchmarkPack(b *testing.B) {
 // X = [[4,a],[1,b],[2,c],[2,a],[1,d][4,e]]
 
 var TestPairsEncode = []TestPairStringSlice{
-	{StringSlice{"a", "a", "a", "a", "b", "c", "c", "a", "a", "d", "e", "e", "e", "e"}, EncodedSlice{{4, "a"}, {1, "b"}, {2, "c"}, {2, "a"}, {1, "d"}, {4, "e"}}},
+	{StringSlice{"a", "a", "a", "a", "b", "c", "c", "a", "a", "d", "e", "e", "e", "e"}, []EncodedPair{{4, "a"}, {1, "b"}, {2, "c"}, {2, "a"}, {1, "d"}, {4, "e"}}},
 }
 
 func TestEncode(t *testing.T) {
@@ -391,6 +391,25 @@ func TestDecode(t *testing.T) {
 // Example:
 // ?- encode_direct([a,a,a,a,b,c,c,a,a,d,e,e,e,e],X).
 // X = [[4,a],b,[2,c],[2,a],d,[4,e]]
+
+var TestPairsEncodeDirect = []TestPairStringSlice{
+	{StringSlice{"a", "a", "a", "a", "b", "c", "c", "a", "a", "d", "e", "e", "e", "e"}, EncodedSlice{{4, "a"}, {1, "b"}, {2, "c"}, {2, "a"}, {1, "d"}, {4, "e"}}},
+}
+
+func TestEncodeDirect(t *testing.T) {
+	for _, pair := range TestPairsEncodeDirect {
+		result := pair.In.EncodeDirect()
+		if !reflect.DeepEqual(result, pair.Out) {
+			t.Errorf("Expected %v to be %v", result, pair.Out)
+		}
+	}
+}
+
+func BenchmarkEncodeDirect(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		TestPairsEncode[0].In.Encode()
+	}
+}
 
 // P14 (*) Duplicate the elements of a list.
 // Example:

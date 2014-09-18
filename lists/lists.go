@@ -188,8 +188,8 @@ func (s StringSlice) Pack() []StringSlice {
 // ?- encode([a,a,a,a,b,c,c,a,a,d,e,e,e,e],X).
 // X = [[4,a],[1,b],[2,c],[2,a],[1,d][4,e]]
 
-func (s StringSlice) Encode() EncodedSlice {
-	var result EncodedSlice
+func (s StringSlice) Encode() []EncodedPair {
+	var result []EncodedPair
 	var compressed []StringSlice
 	compressed = s.Pack()
 	for _, item := range compressed {
@@ -253,6 +253,26 @@ func (g GenericSlice) Decode() StringSlice {
 // Example:
 // ?- encode_direct([a,a,a,a,b,c,c,a,a,d,e,e,e,e],X).
 // X = [[4,a],b,[2,c],[2,a],d,[4,e]]
+
+func (s StringSlice) EncodeDirect() []StringSlice {
+	var result []StringSlice
+	var group StringSlice
+	for i, item := range s {
+		if len(group) == 0 {
+			group = append(group, item)
+		} else if last := group[len(group)-1]; item == last {
+			group = append(group, item)
+			if i == len(s)-1 {
+				result = append(result, group)
+			}
+		} else if last := group[len(group)-1]; item != last {
+			result = append(result, group)
+			group = make(StringSlice, 0)
+			group = append(group, item)
+		}
+	}
+	return result
+}
 
 // P14 (*) Duplicate the elements of a list.
 // Example:
