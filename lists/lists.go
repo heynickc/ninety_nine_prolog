@@ -5,7 +5,6 @@ import (
 )
 
 type StringSlice []string
-type GenericSlice []interface{}
 type EncodedPair struct {
 	c int
 	s string
@@ -121,14 +120,14 @@ func (s StringSlice) IsPalindrome() bool {
 // http://rosettacode.org/wiki/Flatten_a_list#Go
 // Uses type switching http://golang.org/doc/effective_go.html#type_switch
 
-func (n GenericSlice) Flatten() StringSlice {
+func Flatten(n []interface{}) StringSlice {
 	var result []string
 	for _, s := range n {
 		switch i := s.(type) {
 		case string:
 			result = append(result, i)
-		case GenericSlice:
-			result = append(result, i.Flatten()...)
+		case []interface{}:
+			result = append(result, Flatten(i)...)
 		}
 	}
 	return result
@@ -214,8 +213,8 @@ func (s StringSlice) EncodePair() EncodedPair {
 // ?- encode_modified([a,a,a,a,b,c,c,a,a,d,e,e,e,e],X).
 // X = [[4,a],b,[2,c],[2,a],d,[4,e]]
 
-func (s StringSlice) EncodeModified() GenericSlice {
-	var result GenericSlice
+func (s StringSlice) EncodeModified() []interface{} {
+	var result []interface{}
 	var compressed []StringSlice
 	compressed = s.Pack()
 	for _, item := range compressed {
@@ -231,7 +230,7 @@ func (s StringSlice) EncodeModified() GenericSlice {
 // P12 (**) Decode a run-length encoded list.
 // Given a run-length code list generated as specified in problem P11. Construct its uncompressed version.
 
-func (g GenericSlice) Decode() StringSlice {
+func Decode(g []interface{}) StringSlice {
 	var result StringSlice
 	for _, item := range g {
 		switch i := item.(type) {
@@ -253,10 +252,10 @@ func (g GenericSlice) Decode() StringSlice {
 // ?- encode_direct([a,a,a,a,b,c,c,a,a,d,e,e,e,e],X).
 // X = [[4,a],b,[2,c],[2,a],d,[4,e]]
 
-func (s StringSlice) EncodeDirect() GenericSlice {
+func (s StringSlice) EncodeDirect() []interface{} {
 	var packed []StringSlice
 	var group StringSlice
-	var result GenericSlice
+	var result []interface{}
 	for i, item := range s {
 		if len(group) == 0 {
 			group = append(group, item)
