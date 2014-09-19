@@ -287,7 +287,10 @@ func (s StringSlice) EncodeDirect() []interface{} {
 
 func (s StringSlice) Duplicate() StringSlice {
 	var result StringSlice
-	result = s
+	for _, item := range s {
+		dups := StringSlice{item, item}
+		result = append(result, dups...)
+	}
 	return result
 }
 
