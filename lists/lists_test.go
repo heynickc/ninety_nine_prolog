@@ -1,7 +1,6 @@
 package lists
 
 import (
-	"fmt"
 	"reflect"
 	"testing"
 )
@@ -423,14 +422,13 @@ func BenchmarkEncodeDirect(b *testing.B) {
 // ?- dupli([a,b,c,c,d],X).
 // X = [a,a,b,b,c,c,c,c,d,d]
 
-var TestPairsDuplicate = []TestPairStringSlice{
-	{StringSlice{"a", "b", "c", "c", "d"}, StringSlice{"a", "a", "b", "b", "c", "c", "c", "c", "d", "d"}},
+var TestPairsDuplicateN = []TestPairStringSlice{
+	{StringSlice{"a", "b", "c", "c", "d"}, StringSlice{"a", "a", "a", "b", "b", "b", "c", "c", "c", "c", "c", "c", "d", "d", "d"}},
 }
 
-func TestDuplicate(t *testing.T) {
-	for _, pair := range TestPairsDuplicate {
-		result := pair.In.Duplicate()
-		fmt.Println(result)
+func TestDuplicateN(t *testing.T) {
+	for _, pair := range TestPairsDuplicateN {
+		result := pair.In.DuplicateN(3)
 		if !reflect.DeepEqual(result, pair.Out) {
 			t.Errorf("Expected %v to be %v", result, pair.Out)
 		}
@@ -444,6 +442,19 @@ func TestDuplicate(t *testing.T) {
 
 // What are the results of the goal:
 // ?- dupli(X,3,Y).
+
+var TestPairsDuplicate = []TestPairStringSlice{
+	{StringSlice{"a", "b", "c", "c", "d"}, StringSlice{"a", "a", "b", "b", "c", "c", "c", "c", "d", "d"}},
+}
+
+func TestDuplicate(t *testing.T) {
+	for _, pair := range TestPairsDuplicate {
+		result := pair.In.Duplicate()
+		if !reflect.DeepEqual(result, pair.Out) {
+			t.Errorf("Expected %v to be %v", result, pair.Out)
+		}
+	}
+}
 
 // P16 (**) Drop every N'th element from a list.
 // Example:

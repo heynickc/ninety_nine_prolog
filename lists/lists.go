@@ -302,6 +302,18 @@ func (s StringSlice) Duplicate() StringSlice {
 // What are the results of the goal:
 // ?- dupli(X,3,Y).
 
+func (s StringSlice) DuplicateN(n int) StringSlice {
+	var result StringSlice
+	for _, item := range s {
+		var dups StringSlice
+		for i := 0; i < n; i++ {
+			dups = append(dups, item)
+		}
+		result = append(result, dups...)
+	}
+	return result
+}
+
 // P16 (**) Drop every N'th element from a list.
 // Example:
 // ?- drop([a,b,c,d,e,f,g,h,i,k],3,X).
