@@ -319,6 +319,11 @@ func (s StringSlice) DuplicateN(n int) StringSlice {
 // ?- drop([a,b,c,d,e,f,g,h,i,k],3,X).
 // X = [a,b,d,e,g,h,k]
 
+func (s StringSlice) DropEveryN(n int) StringSlice {
+	var result StringSlice
+	return result
+}
+
 // P17 (*) Split a list into two parts; the length of the first part is given.
 // Do not use any predefined predicates.
 

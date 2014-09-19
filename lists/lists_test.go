@@ -422,13 +422,13 @@ func BenchmarkEncodeDirect(b *testing.B) {
 // ?- dupli([a,b,c,c,d],X).
 // X = [a,a,b,b,c,c,c,c,d,d]
 
-var TestPairsDuplicateN = []TestPairStringSlice{
-	{StringSlice{"a", "b", "c", "c", "d"}, StringSlice{"a", "a", "a", "b", "b", "b", "c", "c", "c", "c", "c", "c", "d", "d", "d"}},
+var TestPairsDuplicate = []TestPairStringSlice{
+	{StringSlice{"a", "b", "c", "c", "d"}, StringSlice{"a", "a", "b", "b", "c", "c", "c", "c", "d", "d"}},
 }
 
-func TestDuplicateN(t *testing.T) {
-	for _, pair := range TestPairsDuplicateN {
-		result := pair.In.DuplicateN(3)
+func TestDuplicate(t *testing.T) {
+	for _, pair := range TestPairsDuplicate {
+		result := pair.In.Duplicate()
 		if !reflect.DeepEqual(result, pair.Out) {
 			t.Errorf("Expected %v to be %v", result, pair.Out)
 		}
@@ -443,13 +443,13 @@ func TestDuplicateN(t *testing.T) {
 // What are the results of the goal:
 // ?- dupli(X,3,Y).
 
-var TestPairsDuplicate = []TestPairStringSlice{
-	{StringSlice{"a", "b", "c", "c", "d"}, StringSlice{"a", "a", "b", "b", "c", "c", "c", "c", "d", "d"}},
+var TestPairsDuplicateN = []TestPairStringSlice{
+	{StringSlice{"a", "b", "c", "c", "d"}, StringSlice{"a", "a", "a", "b", "b", "b", "c", "c", "c", "c", "c", "c", "d", "d", "d"}},
 }
 
-func TestDuplicate(t *testing.T) {
-	for _, pair := range TestPairsDuplicate {
-		result := pair.In.Duplicate()
+func TestDuplicateN(t *testing.T) {
+	for _, pair := range TestPairsDuplicateN {
+		result := pair.In.DuplicateN(3)
 		if !reflect.DeepEqual(result, pair.Out) {
 			t.Errorf("Expected %v to be %v", result, pair.Out)
 		}
@@ -460,6 +460,19 @@ func TestDuplicate(t *testing.T) {
 // Example:
 // ?- drop([a,b,c,d,e,f,g,h,i,k],3,X).
 // X = [a,b,d,e,g,h,k]
+
+var TestPairsDropEveryN = []TestPairStringSlice{
+	{StringSlice{"a", "b", "c", "d", "e", "f", "g", "h", "i", "k"}, StringSlice{"a", "b", "d", "e", "g", "h"}},
+}
+
+func TestDropEveryN(t *testing.T) {
+	for _, pair := range TestPairsDropEveryN {
+		result := pair.In.DropEveryN(3)
+		if !reflect.DeepEqual(result, pair.Out) {
+			t.Errorf("Expected %v to be %v", result, pair.Out)
+		}
+	}
+}
 
 // P17 (*) Split a list into two parts; the length of the first part is given.
 // Do not use any predefined predicates.
