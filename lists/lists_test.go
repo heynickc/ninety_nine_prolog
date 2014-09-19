@@ -98,6 +98,26 @@ var TestPairsCompress = []TestPairStringSlice{
 	{StringSlice{"a", "a", "a", "a", "b", "b", "b"}, StringSlice{"a", "b"}},
 }
 
+var TestPairsPack = []TestPairStringSlice{
+	{StringSlice{"a", "a", "a", "a", "b", "c", "c", "a", "a", "d", "e", "e", "e", "e"}, []StringSlice{{"a", "a", "a", "a"}, {"b"}, {"c", "c"}, {"a", "a"}, {"d"}, {"e", "e", "e", "e"}}},
+}
+
+var TestPairsEncode = []TestPairStringSlice{
+	{StringSlice{"a", "a", "a", "a", "b", "c", "c", "a", "a", "d", "e", "e", "e", "e"}, []EncodedPair{{4, "a"}, {1, "b"}, {2, "c"}, {2, "a"}, {1, "d"}, {4, "e"}}},
+}
+
+var TestPairsEncodeModified = []TestPairStringSlice{
+	{StringSlice{"a", "a", "a", "a", "b", "c", "c", "a", "a", "d", "e", "e", "e", "e"}, []interface{}{EncodedPair{4, "a"}, "b", EncodedPair{2, "c"}, EncodedPair{2, "a"}, "d", EncodedPair{4, "e"}}},
+}
+
+var TestPairsDecode = []TestPairGenericSlice{
+	{[]interface{}{EncodedPair{4, "a"}, "b", EncodedPair{2, "c"}, EncodedPair{2, "a"}, "d", EncodedPair{4, "e"}}, StringSlice{"a", "a", "a", "a", "b", "c", "c", "a", "a", "d", "e", "e", "e", "e"}},
+}
+
+var TestPairsEncodeDirect = []TestPairStringSlice{
+	{StringSlice{"a", "a", "a", "a", "b", "c", "c", "a", "a", "d", "e", "e", "e", "e"}, []interface{}{EncodedPair{4, "a"}, "b", EncodedPair{2, "c"}, EncodedPair{2, "a"}, "d", EncodedPair{4, "e"}}},
+}
+
 func TestLastElement(t *testing.T) {
 	for _, pair := range TestPairsLastElement {
 		result, _ := pair.In.LastElement()
@@ -297,10 +317,6 @@ func BenchmarkCompress(b *testing.B) {
 // ?- pack([a,a,a,a,b,c,c,a,a,d,e,e,e,e],X).
 // X = [[a,a,a,a],[b],[c,c],[a,a],[d],[e,e,e,e]]
 
-var TestPairsPack = []TestPairStringSlice{
-	{StringSlice{"a", "a", "a", "a", "b", "c", "c", "a", "a", "d", "e", "e", "e", "e"}, []StringSlice{{"a", "a", "a", "a"}, {"b"}, {"c", "c"}, {"a", "a"}, {"d"}, {"e", "e", "e", "e"}}},
-}
-
 func TestPack(t *testing.T) {
 	for _, pair := range TestPairsPack {
 		result := pair.In.Pack()
@@ -322,10 +338,6 @@ func BenchmarkPack(b *testing.B) {
 // Example:
 // ?- encode([a,a,a,a,b,c,c,a,a,d,e,e,e,e],X).
 // X = [[4,a],[1,b],[2,c],[2,a],[1,d][4,e]]
-
-var TestPairsEncode = []TestPairStringSlice{
-	{StringSlice{"a", "a", "a", "a", "b", "c", "c", "a", "a", "d", "e", "e", "e", "e"}, []EncodedPair{{4, "a"}, {1, "b"}, {2, "c"}, {2, "a"}, {1, "d"}, {4, "e"}}},
-}
 
 func TestEncode(t *testing.T) {
 	for _, pair := range TestPairsEncode {
@@ -349,10 +361,6 @@ func BenchmarkEncode(b *testing.B) {
 // ?- encode_modified([a,a,a,a,b,c,c,a,a,d,e,e,e,e],X).
 // X = [[4,a],b,[2,c],[2,a],d,[4,e]]
 
-var TestPairsEncodeModified = []TestPairStringSlice{
-	{StringSlice{"a", "a", "a", "a", "b", "c", "c", "a", "a", "d", "e", "e", "e", "e"}, []interface{}{EncodedPair{4, "a"}, "b", EncodedPair{2, "c"}, EncodedPair{2, "a"}, "d", EncodedPair{4, "e"}}},
-}
-
 func TestEncodeModified(t *testing.T) {
 	for _, pair := range TestPairsEncodeModified {
 		result := pair.In.EncodeModified()
@@ -371,16 +379,18 @@ func BenchmarkEncodeModified(b *testing.B) {
 // P12 (**) Decode a run-length encoded list.
 // Given a run-length code list generated as specified in problem P11. Construct its uncompressed version.
 
-var TestPairsDecode = []TestPairGenericSlice{
-	{[]interface{}{EncodedPair{4, "a"}, "b", EncodedPair{2, "c"}, EncodedPair{2, "a"}, "d", EncodedPair{4, "e"}}, StringSlice{"a", "a", "a", "a", "b", "c", "c", "a", "a", "d", "e", "e", "e", "e"}},
-}
-
 func TestDecode(t *testing.T) {
 	for _, pair := range TestPairsDecode {
 		result := Decode(pair.In)
 		if !reflect.DeepEqual(result, pair.Out) {
 			t.Errorf("Expected %v to be %v", result, pair.Out)
 		}
+	}
+}
+
+func BenchmarkDecode(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		Decode(TestPairsDecode[0].In)
 	}
 }
 
@@ -393,14 +403,9 @@ func TestDecode(t *testing.T) {
 // ?- encode_direct([a,a,a,a,b,c,c,a,a,d,e,e,e,e],X).
 // X = [[4,a],b,[2,c],[2,a],d,[4,e]]
 
-var TestPairsEncodeDirect = []TestPairStringSlice{
-	{StringSlice{"a", "a", "a", "a", "b", "c", "c", "a", "a", "d", "e", "e", "e", "e"}, []interface{}{EncodedPair{4, "a"}, "b", EncodedPair{2, "c"}, EncodedPair{2, "a"}, "d", EncodedPair{4, "e"}}},
-}
-
 func TestEncodeDirect(t *testing.T) {
 	for _, pair := range TestPairsEncodeDirect {
 		result := pair.In.EncodeDirect()
-		fmt.Println(result)
 		if !reflect.DeepEqual(result, pair.Out) {
 			t.Errorf("Expected %v to be %v", result, pair.Out)
 		}
