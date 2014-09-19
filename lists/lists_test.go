@@ -423,6 +423,20 @@ func BenchmarkEncodeDirect(b *testing.B) {
 // ?- dupli([a,b,c,c,d],X).
 // X = [a,a,b,b,c,c,c,c,d,d]
 
+var TestPairsDuplicate = []TestPairStringSlice{
+	{StringSlice{"a", "b", "c", "c", "d"}, StringSlice{"a", "a", "b", "b", "c", "c", "c", "c", "d", "d"}},
+}
+
+func TestDuplicate(t *testing.T) {
+	for _, pair := range TestPairsDuplicate {
+		result := pair.In.Duplicate()
+		fmt.Println(result)
+		if !reflect.DeepEqual(result, pair.Out) {
+			t.Errorf("Expected %v to be %v", result, pair.Out)
+		}
+	}
+}
+
 // P15 (**) Duplicate the elements of a list a given number of times.
 // Example:
 // ?- dupli([a,b,c],3,X).

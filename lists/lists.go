@@ -285,6 +285,12 @@ func (s StringSlice) EncodeDirect() []interface{} {
 // ?- dupli([a,b,c,c,d],X).
 // X = [a,a,b,b,c,c,c,c,d,d]
 
+func (s StringSlice) Duplicate() StringSlice {
+	var result StringSlice
+	result = s
+	return result
+}
+
 // P15 (**) Duplicate the elements of a list a given number of times.
 // Example:
 // ?- dupli([a,b,c],3,X).
