@@ -10,6 +10,12 @@ type TestPairStringSlice struct {
 	Out interface{}
 }
 
+type TestPairStringSlice2Out struct {
+	In   StringSlice
+	Out1 interface{}
+	Out2 interface{}
+}
+
 type TestPairGenericSlice struct {
 	In  []interface{}
 	Out interface{}
@@ -481,6 +487,22 @@ func TestDropEveryN(t *testing.T) {
 // ?- split([a,b,c,d,e,f,g,h,i,k],3,L1,L2).
 // L1 = [a,b,c]
 // L2 = [d,e,f,g,h,i,k]
+
+var TestPairsSplitN = []TestPairStringSlice2Out{
+	{StringSlice{"a", "b", "c", "d", "e", "f", "g", "h", "i", "k"}, StringSlice{"a", "b", "c"}, StringSlice{"d", "e", "f", "g", "h", "i", "k"}},
+}
+
+func TestSplitN(t *testing.T) {
+	for _, pair := range TestPairsSplitN {
+		result1, result2 := pair.In.SplitN(3)
+		if !reflect.DeepEqual(result1, pair.Out1) {
+			t.Errorf("Expected %v to be %v", result1, pair.Out1)
+		}
+		if !reflect.DeepEqual(result2, pair.Out2) {
+			t.Errorf("Expected %v to be %v", result2, pair.Out2)
+		}
+	}
+}
 
 // P18 (**) Extract a slice from a list.
 // Given two indices, I and K, the slice is the list containing the elements between the I'th and K'th element of the original list (both limits included). Start counting the elements with 1.

@@ -2,7 +2,6 @@ package lists
 
 import (
 	"errors"
-	"fmt"
 )
 
 type StringSlice []string
@@ -337,6 +336,12 @@ func (s StringSlice) DropEveryN(n int) StringSlice {
 // ?- split([a,b,c,d,e,f,g,h,i,k],3,L1,L2).
 // L1 = [a,b,c]
 // L2 = [d,e,f,g,h,i,k]
+
+func (s StringSlice) SplitN(n int) (StringSlice, StringSlice) {
+	var result1, result2 StringSlice
+	result1, result2 = s[:n], s[n:]
+	return result1, result2
+}
 
 // P18 (**) Extract a slice from a list.
 // Given two indices, I and K, the slice is the list containing the elements between the I'th and K'th element of the original list (both limits included). Start counting the elements with 1.
