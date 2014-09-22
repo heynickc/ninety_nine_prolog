@@ -123,6 +123,26 @@ var TestPairsEncodeDirect = []TestPairStringSlice{
 	{StringSlice{"a", "a", "a", "a", "b", "c", "c", "a", "a", "d", "e", "e", "e", "e"}, []interface{}{EncodedPair{4, "a"}, "b", EncodedPair{2, "c"}, EncodedPair{2, "a"}, "d", EncodedPair{4, "e"}}},
 }
 
+var TestPairsDuplicate = []TestPairStringSlice{
+	{StringSlice{"a", "b", "c", "c", "d"}, StringSlice{"a", "a", "b", "b", "c", "c", "c", "c", "d", "d"}},
+}
+
+var TestPairsDuplicateN = []TestPairStringSlice{
+	{StringSlice{"a", "b", "c", "c", "d"}, StringSlice{"a", "a", "a", "b", "b", "b", "c", "c", "c", "c", "c", "c", "d", "d", "d"}},
+}
+
+var TestPairsDropEveryN = []TestPairStringSlice{
+	{StringSlice{"a", "b", "c", "d", "e", "f", "g", "h", "i", "k"}, StringSlice{"a", "b", "d", "e", "g", "h"}},
+}
+
+var TestPairsSplitN = []TestPairStringSlice2Out{
+	{StringSlice{"a", "b", "c", "d", "e", "f", "g", "h", "i", "k"}, StringSlice{"a", "b", "c"}, StringSlice{"d", "e", "f", "g", "h", "i", "k"}},
+}
+
+var TestPairsSlice = []TestPairStringSlice{
+	{StringSlice{"a", "b", "c", "d", "e", "f", "g", "h", "i", "k"}, StringSlice{"c", "d", "e", "f", "g"}},
+}
+
 func TestLastElement(t *testing.T) {
 	for _, pair := range TestPairsLastElement {
 		result, _ := pair.In.LastElement()
@@ -428,10 +448,6 @@ func BenchmarkEncodeDirect(b *testing.B) {
 // ?- dupli([a,b,c,c,d],X).
 // X = [a,a,b,b,c,c,c,c,d,d]
 
-var TestPairsDuplicate = []TestPairStringSlice{
-	{StringSlice{"a", "b", "c", "c", "d"}, StringSlice{"a", "a", "b", "b", "c", "c", "c", "c", "d", "d"}},
-}
-
 func TestDuplicate(t *testing.T) {
 	for _, pair := range TestPairsDuplicate {
 		result := pair.In.Duplicate()
@@ -449,10 +465,6 @@ func TestDuplicate(t *testing.T) {
 // What are the results of the goal:
 // ?- dupli(X,3,Y).
 
-var TestPairsDuplicateN = []TestPairStringSlice{
-	{StringSlice{"a", "b", "c", "c", "d"}, StringSlice{"a", "a", "a", "b", "b", "b", "c", "c", "c", "c", "c", "c", "d", "d", "d"}},
-}
-
 func TestDuplicateN(t *testing.T) {
 	for _, pair := range TestPairsDuplicateN {
 		result := pair.In.DuplicateN(3)
@@ -466,10 +478,6 @@ func TestDuplicateN(t *testing.T) {
 // Example:
 // ?- drop([a,b,c,d,e,f,g,h,i,k],3,X).
 // X = [a,b,d,e,g,h,k]
-
-var TestPairsDropEveryN = []TestPairStringSlice{
-	{StringSlice{"a", "b", "c", "d", "e", "f", "g", "h", "i", "k"}, StringSlice{"a", "b", "d", "e", "g", "h"}},
-}
 
 func TestDropEveryN(t *testing.T) {
 	for _, pair := range TestPairsDropEveryN {
@@ -487,10 +495,6 @@ func TestDropEveryN(t *testing.T) {
 // ?- split([a,b,c,d,e,f,g,h,i,k],3,L1,L2).
 // L1 = [a,b,c]
 // L2 = [d,e,f,g,h,i,k]
-
-var TestPairsSplitN = []TestPairStringSlice2Out{
-	{StringSlice{"a", "b", "c", "d", "e", "f", "g", "h", "i", "k"}, StringSlice{"a", "b", "c"}, StringSlice{"d", "e", "f", "g", "h", "i", "k"}},
-}
 
 func TestSplitN(t *testing.T) {
 	for _, pair := range TestPairsSplitN {
@@ -510,10 +514,6 @@ func TestSplitN(t *testing.T) {
 // Example:
 // ?- slice([a,b,c,d,e,f,g,h,i,k],3,7,L).
 // X = [c,d,e,f,g]
-
-var TestPairsSlice = []TestPairStringSlice{
-	{StringSlice{"a", "b", "c", "d", "e", "f", "g", "h", "i", "k"}, StringSlice{"c", "d", "e", "f", "g"}},
-}
 
 func TestSlice(t *testing.T) {
 	for _, pair := range TestPairsSlice {
