@@ -511,6 +511,19 @@ func TestSplitN(t *testing.T) {
 // ?- slice([a,b,c,d,e,f,g,h,i,k],3,7,L).
 // X = [c,d,e,f,g]
 
+var TestPairsSlice = []TestPairStringSlice{
+	{StringSlice{"a", "b", "c", "d", "e", "f", "g", "h", "i", "k"}, StringSlice{"c", "d", "e", "f", "g"}},
+}
+
+func TestSlice(t *testing.T) {
+	for _, pair := range TestPairsSlice {
+		result := pair.In.Slice(3, 7)
+		if !reflect.DeepEqual(result, pair.Out) {
+			t.Errorf("Expected %v to be %v", result, pair.Out)
+		}
+	}
+}
+
 // P19 (**) Rotate a list N places to the left.
 // Examples:
 // ?- rotate([a,b,c,d,e,f,g,h],3,X).

@@ -350,6 +350,12 @@ func (s StringSlice) SplitN(n int) (StringSlice, StringSlice) {
 // ?- slice([a,b,c,d,e,f,g,h,i,k],3,7,L).
 // X = [c,d,e,f,g]
 
+func (s StringSlice) Slice(start, end int) StringSlice {
+	var result StringSlice
+	result = s[start-1 : end]
+	return result
+}
+
 // P19 (**) Rotate a list N places to the left.
 // Examples:
 // ?- rotate([a,b,c,d,e,f,g,h],3,X).
