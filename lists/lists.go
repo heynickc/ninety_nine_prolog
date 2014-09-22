@@ -2,6 +2,7 @@ package lists
 
 import (
 	"errors"
+	"fmt"
 )
 
 type StringSlice []string
@@ -321,6 +322,11 @@ func (s StringSlice) DuplicateN(n int) StringSlice {
 
 func (s StringSlice) DropEveryN(n int) StringSlice {
 	var result StringSlice
+	for i, _ := range s {
+		if i%n != 0 {
+			result = append(result, s[i-1])
+		}
+	}
 	return result
 }
 
