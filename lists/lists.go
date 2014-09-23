@@ -72,15 +72,6 @@ func (s StringSlice) ReversePortion(i, j int) StringSlice {
 	return result
 }
 
-func (s StringSlice) Rotate(rotDist, n int) StringSlice {
-	result := make(StringSlice, len(s))
-	copy(result, s)
-	result = result.ReversePortion(0, rotDist-1)
-	result = result.ReversePortion(rotDist, n-1)
-	result = result.ReversePortion(0, n-1)
-	return result
-}
-
 // P05 (*) Reverse a list.
 // Uses ReversePortion() algorithm
 
@@ -365,6 +356,15 @@ func (s StringSlice) Slice(start, end int) StringSlice {
 // X = [g,h,a,b,c,d,e,f]
 
 // Hint: Use the predefined predicates length/2 and append/3, as well as the result of problem P17.
+
+func (s StringSlice) Rotate(rotDist, n int) StringSlice {
+	result := make(StringSlice, len(s))
+	copy(result, s)
+	result = result.ReversePortion(0, rotDist-1)
+	result = result.ReversePortion(rotDist, n-1)
+	result = result.ReversePortion(0, n-1)
+	return result
+}
 
 // P20 (*) Remove the K'th element from a list.
 // Example:

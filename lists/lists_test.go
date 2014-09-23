@@ -62,16 +62,6 @@ var TestPairsLength = []TestPairStringSlice{
 	{StringSlice{}, 0},
 }
 
-var TestPairsRotate = []TestPairStringSlice{
-	{StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"b", "c", "d", "e", "f", "g", "h", "a"}},
-	{StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"c", "d", "e", "f", "g", "h", "a", "b"}},
-	{StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"d", "e", "f", "g", "h", "a", "b", "c"}},
-	{StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"e", "f", "g", "h", "a", "b", "c", "d"}},
-	{StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"f", "g", "h", "a", "b", "c", "d", "e"}},
-	{StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"g", "h", "a", "b", "c", "d", "e", "f"}},
-	{StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"h", "a", "b", "c", "d", "e", "f", "g"}},
-}
-
 var TestPairsReverse = []TestPairStringSlice{
 	{StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"h", "g", "f", "e", "d", "c", "b", "a"}},
 	{StringSlice{"a", "b", "c", "d", "e", "f", "g"}, StringSlice{"g", "f", "e", "d", "c", "b", "a"}},
@@ -232,26 +222,6 @@ func TestLength(t *testing.T) {
 func BenchmarkLength(b *testing.B) {
 	for n := 0; n < b.N; n++ {
 		TestPairsLength[0].In.Length()
-	}
-}
-
-// SIDEBAR: Rotate a list...
-// Instead of flipping, this will cycle the list by n elements
-// http://www.cs.bell-labs.com/cm/cs/pearls/rotate.c
-// Programming Pearls 2.3
-
-func TestRotate(t *testing.T) {
-	for i, pair := range TestPairsRotate {
-		result := pair.In.Rotate(i+1, pair.In.Length())
-		if !reflect.DeepEqual(result, pair.Out) {
-			t.Errorf("Expected %v to be %v", result, pair.Out)
-		}
-	}
-}
-
-func BenchmarkRotate(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		TestPairsRotate[0].In.Rotate(4, TestPairsRotate[0].In.Length())
 	}
 }
 
@@ -457,6 +427,12 @@ func TestDuplicate(t *testing.T) {
 	}
 }
 
+func BenchmarkDuplicate(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		TestPairsDuplicate[0].In.Duplicate()
+	}
+}
+
 // P15 (**) Duplicate the elements of a list a given number of times.
 // Example:
 // ?- dupli([a,b,c],3,X).
@@ -474,6 +450,12 @@ func TestDuplicateN(t *testing.T) {
 	}
 }
 
+func BenchmarkDuplicateN(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		TestPairsDuplicateN[0].In.DuplicateN(3)
+	}
+}
+
 // P16 (**) Drop every N'th element from a list.
 // Example:
 // ?- drop([a,b,c,d,e,f,g,h,i,k],3,X).
@@ -485,6 +467,12 @@ func TestDropEveryN(t *testing.T) {
 		if !reflect.DeepEqual(result, pair.Out) {
 			t.Errorf("Expected %v to be %v", result, pair.Out)
 		}
+	}
+}
+
+func BenchmarkDropEveryN(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		TestPairsDropEveryN[0].In.DropEveryN(3)
 	}
 }
 
@@ -508,6 +496,12 @@ func TestSplitN(t *testing.T) {
 	}
 }
 
+func BenchmarkSplitN(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		TestPairsSplitN[0].In.SplitN(3)
+	}
+}
+
 // P18 (**) Extract a slice from a list.
 // Given two indices, I and K, the slice is the list containing the elements between the I'th and K'th element of the original list (both limits included). Start counting the elements with 1.
 
@@ -524,6 +518,10 @@ func TestSlice(t *testing.T) {
 	}
 }
 
+func BenchmarkSlice(b *testing.B) {
+	TestPairsSlice[0].In.Slice(3, 7)
+}
+
 // P19 (**) Rotate a list N places to the left.
 // Examples:
 // ?- rotate([a,b,c,d,e,f,g,h],3,X).
@@ -533,6 +531,34 @@ func TestSlice(t *testing.T) {
 // X = [g,h,a,b,c,d,e,f]
 
 // Hint: Use the predefined predicates length/2 and append/3, as well as the result of problem P17.
+
+// http://www.cs.bell-labs.com/cm/cs/pearls/rotate.c
+// Programming Pearls 2.3
+
+var TestPairsRotate = []TestPairStringSlice{
+	{StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"b", "c", "d", "e", "f", "g", "h", "a"}},
+	{StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"c", "d", "e", "f", "g", "h", "a", "b"}},
+	{StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"d", "e", "f", "g", "h", "a", "b", "c"}},
+	{StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"e", "f", "g", "h", "a", "b", "c", "d"}},
+	{StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"f", "g", "h", "a", "b", "c", "d", "e"}},
+	{StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"g", "h", "a", "b", "c", "d", "e", "f"}},
+	{StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"h", "a", "b", "c", "d", "e", "f", "g"}},
+}
+
+func TestRotate(t *testing.T) {
+	for i, pair := range TestPairsRotate {
+		result := pair.In.Rotate(i+1, pair.In.Length())
+		if !reflect.DeepEqual(result, pair.Out) {
+			t.Errorf("Expected %v to be %v", result, pair.Out)
+		}
+	}
+}
+
+func BenchmarkRotate(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		TestPairsRotate[0].In.Rotate(4, TestPairsRotate[0].In.Length())
+	}
+}
 
 // P20 (*) Remove the K'th element from a list.
 // Example:
