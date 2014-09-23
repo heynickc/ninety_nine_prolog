@@ -347,9 +347,17 @@ func (s StringSlice) Slice(start, end int) StringSlice {
 func (s StringSlice) Rotate(rotDist, n int) StringSlice {
 	result := make(StringSlice, len(s))
 	copy(result, s)
-	result = result.ReversePortion(0, rotDist-1)
-	result = result.ReversePortion(rotDist, n-1)
-	result = result.ReversePortion(0, n-1)
+	if rotDist > 0 {
+		result = result.ReversePortion(0, rotDist-1)
+		result = result.ReversePortion(rotDist, n-1)
+		result = result.ReversePortion(0, n-1)
+	}
+	if rotDist < 0 {
+		rotDist *= -1
+		result = result.ReversePortion(rotDist+1, len(s)-1)
+		result = result.ReversePortion(0, rotDist)
+		result = result.ReversePortion(0, n-1)
+	}
 	return result
 }
 

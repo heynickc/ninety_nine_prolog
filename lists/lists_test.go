@@ -1,7 +1,7 @@
 package lists
 
 import (
-	// "fmt"
+	"fmt"
 	"reflect"
 	"testing"
 )
@@ -553,11 +553,14 @@ func TestRotate(t *testing.T) {
 			t.Errorf("Expected %v to be %v", result, pair.Out)
 		}
 	}
+
+	right := TestPairsRotate[0].In
+	fmt.Println(right.Rotate(-3, len(right)-1))
 }
 
 func BenchmarkRotate(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		TestPairsRotate[0].In.Rotate(4, TestPairsRotate[0].In.Length())
+		TestPairsRotate[0].In.Rotate(3, TestPairsRotate[0].In.Length())
 	}
 }
 
