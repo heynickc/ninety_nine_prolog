@@ -537,6 +537,17 @@ func BenchmarkSlice(b *testing.B) {
 // Programming Pearls 2.3
 
 var TestPairsRotate = []TestPairStringSlice{
+
+	// {StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"h", "a", "b", "c", "d", "e", "f", "g"}},
+	// {StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"g", "h", "a", "b", "c", "d", "e", "f"}},
+	// {StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"f", "g", "h", "a", "b", "c", "d", "e"}},
+	// {StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"e", "f", "g", "h", "a", "b", "c", "d"}},
+	// {StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"d", "e", "f", "g", "h", "a", "b", "c"}},
+	// {StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"c", "d", "e", "f", "g", "h", "a", "b"}},
+	// {StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"b", "c", "d", "e", "f", "g", "h", "a"}},
+
+	// // {StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}},
+
 	{StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"b", "c", "d", "e", "f", "g", "h", "a"}},
 	{StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"c", "d", "e", "f", "g", "h", "a", "b"}},
 	{StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"d", "e", "f", "g", "h", "a", "b", "c"}},
@@ -547,15 +558,16 @@ var TestPairsRotate = []TestPairStringSlice{
 }
 
 func TestRotate(t *testing.T) {
-	for i, pair := range TestPairsRotate {
-		result := pair.In.Rotate(i+1, len(pair.In))
+	var dist = 1
+	for _, pair := range TestPairsRotate {
+		result := pair.In.Rotate(dist, len(pair.In))
 		if !reflect.DeepEqual(result, pair.Out) {
-			t.Errorf("Expected %v to be %v", result, pair.Out)
+			t.Errorf("Expected Rotate(%v) to be %v but got %v", dist, pair.Out, result)
 		}
+		dist++
 	}
 
-	right := TestPairsRotate[0].In
-	fmt.Println(right.Rotate(-3, len(right)-1))
+	fmt.Println(TestPairsRotate[0].In.Rotate(-2, len(TestPairsRotate[0].In)))
 }
 
 func BenchmarkRotate(b *testing.B) {
