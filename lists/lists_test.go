@@ -1,6 +1,7 @@
 package lists
 
 import (
+	// "fmt"
 	"reflect"
 	"testing"
 )
@@ -547,7 +548,7 @@ var TestPairsRotate = []TestPairStringSlice{
 
 func TestRotate(t *testing.T) {
 	for i, pair := range TestPairsRotate {
-		result := pair.In.Rotate(i+1, pair.In.Length())
+		result := pair.In.Rotate(i+1, len(pair.In))
 		if !reflect.DeepEqual(result, pair.Out) {
 			t.Errorf("Expected %v to be %v", result, pair.Out)
 		}

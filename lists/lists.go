@@ -52,15 +52,12 @@ func (s StringSlice) Length() int {
 	return len(s)
 }
 
-// SIDEBAR: Rotate a list...
-// Instead of full reversal, this will rotate the
-// list by rotDist # of elements
-// http://www.cs.bell-labs.com/cm/cs/pearls/rotate.c
-// Programming Pearls 2.3
+// P05 (*) Reverse a list.
 
-func (s StringSlice) ReversePortion(i, j int) StringSlice {
+func (s StringSlice) Reverse() StringSlice {
 	result := make(StringSlice, len(s))
 	copy(result, s)
+	var i, j = 0, len(s) - 1
 	var t string
 	for i < j {
 		t = result[i]
@@ -69,16 +66,6 @@ func (s StringSlice) ReversePortion(i, j int) StringSlice {
 		i++
 		j--
 	}
-	return result
-}
-
-// P05 (*) Reverse a list.
-// Uses ReversePortion() algorithm
-
-func (s StringSlice) Reverse() StringSlice {
-	result := make(StringSlice, len(s))
-	copy(result, s)
-	result = result.ReversePortion(0, s.Length()-1)
 	return result
 }
 
@@ -363,6 +350,20 @@ func (s StringSlice) Rotate(rotDist, n int) StringSlice {
 	result = result.ReversePortion(0, rotDist-1)
 	result = result.ReversePortion(rotDist, n-1)
 	result = result.ReversePortion(0, n-1)
+	return result
+}
+
+func (s StringSlice) ReversePortion(i, j int) StringSlice {
+	result := make(StringSlice, len(s))
+	copy(result, s)
+	var t string
+	for i < j {
+		t = result[i]
+		result[i] = result[j]
+		result[j] = t
+		i++
+		j--
+	}
 	return result
 }
 
