@@ -568,11 +568,12 @@ func TestRotate(t *testing.T) {
 	}
 
 	test := TestPairsRotate[0].In
-	fmt.Println(test.ReversePortion(2, len(test)-1))
-	fmt.Println(test.ReversePortion(0, 1))
-	fmt.Println(test.ReversePortion(0, len(test)-1))
-
-	fmt.Println(test.RotateRight(-2, len(test)))
+	test = test.ReversePortion(len(test)-2, len(test)-1)
+	fmt.Println(test)
+	test = test.ReversePortion(0, len(test)-3)
+	fmt.Println(test)
+	test = test.ReversePortion(0, len(test)-1)
+	fmt.Println(test)
 }
 
 func BenchmarkRotate(b *testing.B) {
