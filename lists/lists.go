@@ -391,11 +391,7 @@ func (s StringSlice) ReversePortion(i, j int) StringSlice {
 
 func (s StringSlice) RemoveAt(n int) StringSlice {
 	var result StringSlice
-	for i, item := range s {
-		if i+1 != n {
-			result = append(result, item)
-		}
-	}
+	result = append(s[:n-1], s[n:]...)
 	return result
 }
 
