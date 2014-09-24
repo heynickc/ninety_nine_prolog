@@ -389,6 +389,16 @@ func (s StringSlice) ReversePortion(i, j int) StringSlice {
 // X = b
 // R = [a,c,d]
 
+func (s StringSlice) RemoveAt(k int) StringSlice {
+	var result StringSlice
+	for i, item := range s {
+		if i+1 != k {
+			result = append(result, item)
+		}
+	}
+	return result
+}
+
 // P21 (*) Insert an element at a given position into a list.
 // Example:
 // ?- insert_at(alfa,[a,b,c,d],2,L).

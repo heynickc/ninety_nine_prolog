@@ -133,6 +133,28 @@ var TestPairsSlice = []TestPairStringSlice{
 	{StringSlice{"a", "b", "c", "d", "e", "f", "g", "h", "i", "k"}, StringSlice{"c", "d", "e", "f", "g"}},
 }
 
+var TestPairsRotate = []TestPairStringSlice{
+	{StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"b", "c", "d", "e", "f", "g", "h", "a"}},
+	{StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"c", "d", "e", "f", "g", "h", "a", "b"}},
+	{StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"d", "e", "f", "g", "h", "a", "b", "c"}},
+	{StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"e", "f", "g", "h", "a", "b", "c", "d"}},
+	{StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"f", "g", "h", "a", "b", "c", "d", "e"}},
+	{StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"g", "h", "a", "b", "c", "d", "e", "f"}},
+	{StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"h", "a", "b", "c", "d", "e", "f", "g"}},
+	{StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}},
+	{StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"b", "c", "d", "e", "f", "g", "h", "a"}},
+	{StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"c", "d", "e", "f", "g", "h", "a", "b"}},
+	{StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"d", "e", "f", "g", "h", "a", "b", "c"}},
+	{StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"e", "f", "g", "h", "a", "b", "c", "d"}},
+	{StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"f", "g", "h", "a", "b", "c", "d", "e"}},
+	{StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"g", "h", "a", "b", "c", "d", "e", "f"}},
+	{StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"h", "a", "b", "c", "d", "e", "f", "g"}},
+}
+
+var TestPairsRemoveAt = []TestPairStringSlice{
+	{StringSlice{"a", "b", "c", "d"}, StringSlice{"a", "c", "d"}},
+}
+
 func TestLastElement(t *testing.T) {
 	for _, pair := range TestPairsLastElement {
 		result, _ := pair.In.LastElement()
@@ -535,24 +557,6 @@ func BenchmarkSlice(b *testing.B) {
 // http://www.cs.bell-labs.com/cm/cs/pearls/rotate.c
 // Programming Pearls 2.3
 
-var TestPairsRotate = []TestPairStringSlice{
-	{StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"b", "c", "d", "e", "f", "g", "h", "a"}},
-	{StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"c", "d", "e", "f", "g", "h", "a", "b"}},
-	{StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"d", "e", "f", "g", "h", "a", "b", "c"}},
-	{StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"e", "f", "g", "h", "a", "b", "c", "d"}},
-	{StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"f", "g", "h", "a", "b", "c", "d", "e"}},
-	{StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"g", "h", "a", "b", "c", "d", "e", "f"}},
-	{StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"h", "a", "b", "c", "d", "e", "f", "g"}},
-	{StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}},
-	{StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"b", "c", "d", "e", "f", "g", "h", "a"}},
-	{StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"c", "d", "e", "f", "g", "h", "a", "b"}},
-	{StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"d", "e", "f", "g", "h", "a", "b", "c"}},
-	{StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"e", "f", "g", "h", "a", "b", "c", "d"}},
-	{StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"f", "g", "h", "a", "b", "c", "d", "e"}},
-	{StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"g", "h", "a", "b", "c", "d", "e", "f"}},
-	{StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"h", "a", "b", "c", "d", "e", "f", "g"}},
-}
-
 func TestRotate(t *testing.T) {
 	var dist = -7
 	for _, pair := range TestPairsRotate {
@@ -575,6 +579,21 @@ func BenchmarkRotate(b *testing.B) {
 // ?- remove_at(X,[a,b,c,d],2,R).
 // X = b
 // R = [a,c,d]
+
+func TestRemoveAt(t *testing.T) {
+	for _, pair := range TestPairsRemoveAt {
+		result := pair.In.RemoveAt(2)
+		if !reflect.DeepEqual(result, pair.Out) {
+			t.Errorf("Expected %v to be %v", result, pair.Out)
+		}
+	}
+}
+
+func BenchmarkRemoveAt(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		TestPairsRemoveAt[0].In.RemoveAt(2)
+	}
+}
 
 // P21 (*) Insert an element at a given position into a list.
 // Example:
