@@ -1,7 +1,6 @@
 package lists
 
 import (
-	"fmt"
 	"reflect"
 	"testing"
 )
@@ -537,17 +536,14 @@ func BenchmarkSlice(b *testing.B) {
 // Programming Pearls 2.3
 
 var TestPairsRotate = []TestPairStringSlice{
-
-	// {StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"h", "a", "b", "c", "d", "e", "f", "g"}},
-	// {StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"g", "h", "a", "b", "c", "d", "e", "f"}},
-	// {StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"f", "g", "h", "a", "b", "c", "d", "e"}},
-	// {StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"e", "f", "g", "h", "a", "b", "c", "d"}},
-	// {StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"d", "e", "f", "g", "h", "a", "b", "c"}},
-	// {StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"c", "d", "e", "f", "g", "h", "a", "b"}},
-	// {StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"b", "c", "d", "e", "f", "g", "h", "a"}},
-
-	// // {StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}},
-
+	{StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"b", "c", "d", "e", "f", "g", "h", "a"}},
+	{StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"c", "d", "e", "f", "g", "h", "a", "b"}},
+	{StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"d", "e", "f", "g", "h", "a", "b", "c"}},
+	{StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"e", "f", "g", "h", "a", "b", "c", "d"}},
+	{StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"f", "g", "h", "a", "b", "c", "d", "e"}},
+	{StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"g", "h", "a", "b", "c", "d", "e", "f"}},
+	{StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"h", "a", "b", "c", "d", "e", "f", "g"}},
+	{StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}},
 	{StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"b", "c", "d", "e", "f", "g", "h", "a"}},
 	{StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"c", "d", "e", "f", "g", "h", "a", "b"}},
 	{StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, StringSlice{"d", "e", "f", "g", "h", "a", "b", "c"}},
@@ -558,7 +554,7 @@ var TestPairsRotate = []TestPairStringSlice{
 }
 
 func TestRotate(t *testing.T) {
-	var dist = 1
+	var dist = -7
 	for _, pair := range TestPairsRotate {
 		result := pair.In.Rotate(dist, len(pair.In))
 		if !reflect.DeepEqual(result, pair.Out) {
@@ -566,14 +562,6 @@ func TestRotate(t *testing.T) {
 		}
 		dist++
 	}
-
-	test := TestPairsRotate[0].In
-	test = test.ReversePortion(len(test)-2, len(test)-1)
-	fmt.Println(test)
-	test = test.ReversePortion(0, len(test)-3)
-	fmt.Println(test)
-	test = test.ReversePortion(0, len(test)-1)
-	fmt.Println(test)
 }
 
 func BenchmarkRotate(b *testing.B) {
