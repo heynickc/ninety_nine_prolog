@@ -600,6 +600,19 @@ func BenchmarkRemoveAt(b *testing.B) {
 // ?- insert_at(alfa,[a,b,c,d],2,L).
 // L = [a,alfa,b,c,d]
 
+var TestPairsInsertAt = []TestPairStringSlice{
+	{StringSlice{"a", "b", "c", "d"}, StringSlice{"a", "alfa", "b", "c", "d"}},
+}
+
+func TestInsertAt(t *testing.T) {
+	for _, pair := range TestPairsInsertAt {
+		result := pair.In.InsertAt(2, "alfa")
+		if !reflect.DeepEqual(result, pair.Out) {
+			t.Errorf("Expected %v to be %v", result, pair.Out)
+		}
+	}
+}
+
 // P22 (*) Create a list containing all integers within a given range.
 // Example:
 // ?- range(4,9,L).

@@ -389,10 +389,10 @@ func (s StringSlice) ReversePortion(i, j int) StringSlice {
 // X = b
 // R = [a,c,d]
 
-func (s StringSlice) RemoveAt(k int) StringSlice {
+func (s StringSlice) RemoveAt(n int) StringSlice {
 	var result StringSlice
 	for i, item := range s {
-		if i+1 != k {
+		if i+1 != n {
 			result = append(result, item)
 		}
 	}
@@ -403,6 +403,11 @@ func (s StringSlice) RemoveAt(k int) StringSlice {
 // Example:
 // ?- insert_at(alfa,[a,b,c,d],2,L).
 // L = [a,alfa,b,c,d]
+
+func (s StringSlice) InsertAt(n int, ins string) StringSlice {
+	var result StringSlice
+	return result
+}
 
 // P22 (*) Create a list containing all integers within a given range.
 // Example:
