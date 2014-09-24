@@ -406,6 +406,7 @@ func (s StringSlice) RemoveAt(n int) StringSlice {
 
 func (s StringSlice) InsertAt(n int, ins string) StringSlice {
 	var result StringSlice
+	result = append(s[:n-1], append([]string{ins}, s[n-1:]...)...)
 	return result
 }
 
