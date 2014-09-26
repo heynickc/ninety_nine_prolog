@@ -2,6 +2,8 @@ package lists
 
 import (
 	"errors"
+	"math/rand"
+	"time"
 )
 
 type StringSlice []string
@@ -426,6 +428,15 @@ func Range(start, end int) []int {
 // L = [e,d,a]
 
 // Hint: Use the built-in random number generator random/2 and the result of problem P20.
+
+func (s StringSlice) RndSelect(n int) StringSlice {
+	var result StringSlice
+	r := rand.New(rand.NewSource(time.Now().UnixNano()))
+	for i := 0; i < n; i++ {
+		result = append(result, s[r.Intn(len(s))])
+	}
+	return result
+}
 
 // P24 (*) Lotto: Draw N different random numbers from the set 1..M.
 // The selected numbers shall be put into a result list.

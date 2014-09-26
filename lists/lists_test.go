@@ -1,6 +1,7 @@
 package lists
 
 import (
+	"fmt"
 	"reflect"
 	"testing"
 )
@@ -643,6 +644,26 @@ func TestRange(t *testing.T) {
 // L = [e,d,a]
 
 // Hint: Use the built-in random number generator random/2 and the result of problem P20.
+
+var TestPairsRndSelect = []TestPairStringSlice{
+	{StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, 3},
+}
+
+func TestRndSelect(t *testing.T) {
+	for _, pair := range TestPairsRndSelect {
+		result := pair.In.RndSelect(3)
+		fmt.Println(result)
+		if len(result) != pair.Out {
+			t.Errorf("Expected %v to be len of %v", result, pair.Out)
+		}
+	}
+}
+
+func BenchmarkRndSelect(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		TestPairsRndSelect[0].In.RndSelect(3)
+	}
+}
 
 // P24 (*) Lotto: Draw N different random numbers from the set 1..M.
 // The selected numbers shall be put into a result list.
