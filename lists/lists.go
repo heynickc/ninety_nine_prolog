@@ -411,6 +411,14 @@ func (s StringSlice) InsertAt(n int, ins string) StringSlice {
 // ?- range(4,9,L).
 // L = [4,5,6,7,8,9]
 
+func Range(start, end int) []int {
+	var result []int
+	for i := start; i < end+1; i++ {
+		result = append(result, i)
+	}
+	return result
+}
+
 // P23 (**) Extract a given number of randomly selected elements from a list.
 // The selected items shall be put into a result list.
 // Example:

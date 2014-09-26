@@ -21,6 +21,11 @@ type TestPairGenericSlice struct {
 	Out interface{}
 }
 
+type TestPairIntSlice struct {
+	In  []int
+	Out interface{}
+}
+
 // P01 (*) Find the last element of a list.
 // Example:
 // ?- my_last(X,[a,b,c,d]).
@@ -617,6 +622,19 @@ func TestInsertAt(t *testing.T) {
 // Example:
 // ?- range(4,9,L).
 // L = [4,5,6,7,8,9]
+
+var TestPairsRange = []TestPairIntSlice{
+	{[]int{4, 9}, []int{4, 5, 6, 7, 8, 9}},
+}
+
+func TestRange(t *testing.T) {
+	for _, pair := range TestPairsRange {
+		result := Range(pair.In[0], pair.In[1])
+		if !reflect.DeepEqual(result, pair.Out) {
+			t.Errorf("Expected %v to be %v", result, pair.Out)
+		}
+	}
+}
 
 // P23 (**) Extract a given number of randomly selected elements from a list.
 // The selected items shall be put into a result list.
