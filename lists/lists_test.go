@@ -1,7 +1,6 @@
 package lists
 
 import (
-	"fmt"
 	"reflect"
 	"testing"
 )
@@ -652,7 +651,6 @@ var TestPairsRndSelect = []TestPairStringSlice{
 func TestRndSelect(t *testing.T) {
 	for _, pair := range TestPairsRndSelect {
 		result := pair.In.RndSelect(3)
-		fmt.Println(result)
 		if len(result) != pair.Out {
 			t.Errorf("Expected %v to be len of %v", result, pair.Out)
 		}
@@ -670,6 +668,10 @@ func BenchmarkRndSelect(b *testing.B) {
 // Example:
 // ?- rnd_select(6,49,L).
 // L = [23,1,17,33,21,37]
+
+var TestPairsLotto = []TestPairIntSlice{
+	{[]int{6, 49}, 6},
+}
 
 // Hint: Combine the solutions of problems P22 and P23.
 // P25 (*) Generate a random permutation of the elements of a list.
