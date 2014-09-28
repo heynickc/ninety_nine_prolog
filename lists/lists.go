@@ -445,6 +445,12 @@ func (s StringSlice) RndSelect(n int) StringSlice {
 // L = [23,1,17,33,21,37]
 
 // Hint: Combine the solutions of problems P22 and P23.
+
+func Lotto(n, m int) []int {
+	var result []int
+	return result
+}
+
 // P25 (*) Generate a random permutation of the elements of a list.
 // Example:
 // ?- rnd_permu([a,b,c,d,e,f],L).

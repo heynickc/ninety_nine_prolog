@@ -673,6 +673,15 @@ var TestPairsLotto = []TestPairIntSlice{
 	{[]int{6, 49}, 6},
 }
 
+func TestLotto(t *testing.T) {
+	for _, pair := range TestPairsLotto {
+		result := Lotto(pair.In[0], pair.In[1])
+		if len(result) != pair.Out {
+			t.Errorf("Expected %v to be len of %v", result, pair.Out)
+		}
+	}
+}
+
 // Hint: Combine the solutions of problems P22 and P23.
 // P25 (*) Generate a random permutation of the elements of a list.
 // Example:
