@@ -448,6 +448,10 @@ func (s StringSlice) RndSelect(n int) StringSlice {
 
 func Lotto(n, m int) []int {
 	var result []int
+	r := rand.New(rand.NewSource(time.Now().UnixNano()))
+	for i := 0; i < n; i++ {
+		result = append(result, r.Intn(m))
+	}
 	return result
 }
 

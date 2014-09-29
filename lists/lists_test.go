@@ -1,6 +1,7 @@
 package lists
 
 import (
+	"fmt"
 	"reflect"
 	"testing"
 )
@@ -676,9 +677,16 @@ var TestPairsLotto = []TestPairIntSlice{
 func TestLotto(t *testing.T) {
 	for _, pair := range TestPairsLotto {
 		result := Lotto(pair.In[0], pair.In[1])
+		fmt.Println(result)
 		if len(result) != pair.Out {
 			t.Errorf("Expected %v to be len of %v", result, pair.Out)
 		}
+	}
+}
+
+func BenchmarkLotto(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		Lotto(TestPairsLotto[0].In[0], TestPairsLotto[0].In[1])
 	}
 }
 
