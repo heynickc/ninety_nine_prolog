@@ -1,7 +1,6 @@
 package lists
 
 import (
-	"fmt"
 	"reflect"
 	"testing"
 )
@@ -159,6 +158,26 @@ var TestPairsRotate = []TestPairStringSlice{
 
 var TestPairsRemoveAt = []TestPairStringSlice{
 	{StringSlice{"a", "b", "c", "d"}, StringSlice{"a", "c", "d"}},
+}
+
+var TestPairsInsertAt = []TestPairStringSlice{
+	{StringSlice{"a", "b", "c", "d"}, StringSlice{"a", "alfa", "b", "c", "d"}},
+}
+
+var TestPairsRange = []TestPairIntSlice{
+	{[]int{4, 9}, []int{4, 5, 6, 7, 8, 9}},
+}
+
+var TestPairsRndSelect = []TestPairStringSlice{
+	{StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, 3},
+}
+
+var TestPairsLotto = []TestPairIntSlice{
+	{[]int{6, 49}, 6},
+}
+
+var TestPairsRndPermu = []TestPairStringSlice{
+	{StringSlice{"a", "b", "c", "d", "e", "f"}, 6},
 }
 
 func TestLastElement(t *testing.T) {
@@ -606,10 +625,6 @@ func BenchmarkRemoveAt(b *testing.B) {
 // ?- insert_at(alfa,[a,b,c,d],2,L).
 // L = [a,alfa,b,c,d]
 
-var TestPairsInsertAt = []TestPairStringSlice{
-	{StringSlice{"a", "b", "c", "d"}, StringSlice{"a", "alfa", "b", "c", "d"}},
-}
-
 func TestInsertAt(t *testing.T) {
 	for _, pair := range TestPairsInsertAt {
 		result := pair.In.InsertAt(2, "alfa")
@@ -623,10 +638,6 @@ func TestInsertAt(t *testing.T) {
 // Example:
 // ?- range(4,9,L).
 // L = [4,5,6,7,8,9]
-
-var TestPairsRange = []TestPairIntSlice{
-	{[]int{4, 9}, []int{4, 5, 6, 7, 8, 9}},
-}
 
 func TestRange(t *testing.T) {
 	for _, pair := range TestPairsRange {
@@ -644,10 +655,6 @@ func TestRange(t *testing.T) {
 // L = [e,d,a]
 
 // Hint: Use the built-in random number generator random/2 and the result of problem P20.
-
-var TestPairsRndSelect = []TestPairStringSlice{
-	{StringSlice{"a", "b", "c", "d", "e", "f", "g", "h"}, 3},
-}
 
 func TestRndSelect(t *testing.T) {
 	for _, pair := range TestPairsRndSelect {
@@ -670,14 +677,9 @@ func BenchmarkRndSelect(b *testing.B) {
 // ?- rnd_select(6,49,L).
 // L = [23,1,17,33,21,37]
 
-var TestPairsLotto = []TestPairIntSlice{
-	{[]int{6, 49}, 6},
-}
-
 func TestLotto(t *testing.T) {
 	for _, pair := range TestPairsLotto {
 		result := Lotto(pair.In[0], pair.In[1])
-		fmt.Println(result)
 		if len(result) != pair.Out {
 			t.Errorf("Expected %v to be len of %v", result, pair.Out)
 		}
@@ -697,6 +699,21 @@ func BenchmarkLotto(b *testing.B) {
 // L = [b,a,d,c,e,f]
 
 // Hint: Use the solution of problem P23.
+
+func TestRndPermu(t *testing.T) {
+	for _, pair := range TestPairsRndPermu {
+		result := pair.In.RndPermu()
+		if len(result) != pair.Out {
+			t.Errorf("Expected %v to be len of %v", result, pair.Out)
+		}
+	}
+}
+
+func BenchmarkRndPermu(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		TestPairsRndPermu[0].In.RndPermu()
+	}
+}
 
 // P26 (**) Generate the combinations of K distinct objects chosen from the N elements of a list
 // In how many ways can a committee of 3 be chosen from a group of 12 people? We all know that there are C(12,3) = 220 possibilities (C(N,K) denotes the well-known binomial coefficients). For pure mathematicians, this result may be great. But we want to really generate all the possibilities (via backtracking).
