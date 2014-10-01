@@ -491,8 +491,10 @@ func (s StringSlice) Combination(n, m int) {
 	rc = func(i, next int) {
 		for j := next; j < n; j++ {
 			result[i] = s[j]
+			fmt.Printf("result[i] = %v\n", result[i])
+			fmt.Printf("s[j] = %v\n", s[j])
 			if i == last {
-				fmt.Println(result)
+				fmt.Printf("result = %v\n\n", result)
 			} else {
 				rc(i+1, j+1)
 			}
