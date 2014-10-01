@@ -725,6 +725,20 @@ func BenchmarkRndPermu(b *testing.B) {
 // L = [a,b,e] ;
 // ...
 
+var TestPairsCombination = []struct {
+	s StringSlice
+	n int
+	m int
+}{
+	{StringSlice{"a", "b", "c", "d", "e", "f"}, 6, 3},
+}
+
+func TestCombination(t *testing.T) {
+	for _, pair := range TestPairsCombination {
+		pair.s.Combination(pair.n, pair.m)
+	}
+}
+
 // P27 (**) Group the elements of a set into disjoint subsets.
 // a) In how many ways can a group of 9 people work in 3 disjoint subgroups of 2, 3 and 4 persons? Write a predicate that generates all the possibilities via backtracking.
 

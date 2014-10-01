@@ -2,6 +2,7 @@ package lists
 
 import (
 	"errors"
+	"fmt"
 	"math/rand"
 	"time"
 )
@@ -482,6 +483,24 @@ func (s StringSlice) RndPermu() StringSlice {
 // L = [a,b,d] ;
 // L = [a,b,e] ;
 // ...
+
+func (s StringSlice) Combination(n, m int) {
+	result := make([]string, m)
+	last := m - 1
+	var rc func(int, int)
+	rc = func(i, next int) {
+		for j := next; j < n; j++ {
+			result[i] = s[j]
+			if i == last {
+				fmt.Println(result)
+			} else {
+				rc(i+1, j+1)
+			}
+		}
+		return
+	}
+	rc(0, 0)
+}
 
 // P27 (**) Group the elements of a set into disjoint subsets.
 // a) In how many ways can a group of 9 people work in 3 disjoint subgroups of 2, 3 and 4 persons? Write a predicate that generates all the possibilities via backtracking.
