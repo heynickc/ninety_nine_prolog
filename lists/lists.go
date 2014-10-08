@@ -484,15 +484,16 @@ func (s StringSlice) RndPermu() StringSlice {
 // L = [a,b,e] ;
 // ...
 
-func (s StringSlice) Combination(n, m int) {
+func (s StringSlice) Combination(m int) {
+	n := len(s)
 	result := make([]string, m)
 	last := m - 1
 	var rc func(int, int)
 	rc = func(i, next int) {
 		for j := next; j < n; j++ {
 			result[i] = s[j]
-			fmt.Printf("result[i] = %v\n", result[i])
-			fmt.Printf("s[j] = %v\n", s[j])
+			fmt.Printf("result[%v] = %v\n", i, result[i])
+			fmt.Printf("s[%v] = %v\n", j, s[j])
 			if i == last {
 				fmt.Printf("result = %v\n\n", result)
 			} else {

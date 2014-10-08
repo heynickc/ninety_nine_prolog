@@ -727,15 +727,14 @@ func BenchmarkRndPermu(b *testing.B) {
 
 var TestPairsCombination = []struct {
 	s StringSlice
-	n int
 	m int
 }{
-	{StringSlice{"a", "b", "c", "d", "e", "f"}, 6, 3},
+	{StringSlice{"a", "b", "c", "d", "e"}, 3},
 }
 
 func TestCombination(t *testing.T) {
 	for _, pair := range TestPairsCombination {
-		pair.s.Combination(pair.n, pair.m)
+		pair.s.Combination(pair.m)
 	}
 }
 
