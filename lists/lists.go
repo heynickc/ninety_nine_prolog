@@ -489,8 +489,17 @@ func (s StringSlice) Combination(m int) {
 	result := make([]string, m)
 	last := m - 1
 	var rc func(int, int)
-	// var i, next = 0, 0
 	rc = func(i, next int) {
+		// initialize:
+		// for j := 0; j < 5; j++ {
+		//	 result[0] = s[0]
+		// 	 if 0 (which is i) == 4 (which is last) {
+		//		 done, print result[]
+		//   } else {
+		//     set j = 1 (which is next) and
+		//     i = 1 (which is the next element in result[])
+		// 	 }
+		// }
 		for j := next; j < n; j++ {
 			result[i] = s[j]
 			fmt.Printf("result[%v] = %v\n", i, result[i])
@@ -498,7 +507,6 @@ func (s StringSlice) Combination(m int) {
 			if i == last {
 				fmt.Printf("result = %v\n\n", result)
 			} else {
-				// i, j = i+1, j+1
 				rc(i+1, j+1)
 			}
 		}
