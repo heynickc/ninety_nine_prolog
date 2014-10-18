@@ -498,6 +498,7 @@ func (s StringSlice) Combination(m int) {
 		//   } else {
 		//     set j = 1 (which is next) and
 		//     i = 1 (which is the next element in result[])
+		//
 		// 	 }
 		// }
 		for j := next; j < n; j++ {
