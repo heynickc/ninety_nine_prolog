@@ -27,7 +27,7 @@ func main() {
 	}
 	my_chaos := []int{1,1,1,1,1,1,1,1,1,1,13,2,4,3,3,3,3,3,3,3,5,5,5,55,32,12,12,12,12,12,12,12,12,12,34,34,54,45,34,34,45,45,34,34,34,45,45,45,45,45,45}
 	my_chaos_string := []string{"a","a","a","a","a","a","a","a","a","a","a","a","a","a","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","r","f","z"}
-	my_string_simple := []string{"a","b","c","d","e","f"}
+	my_string_simple := []string{"a","b","c","d","e","f","g","h","i","j","k","l","m","n"}
 
 	// Testing the functions
 
@@ -132,6 +132,11 @@ func main() {
 	First, Second := split(my_string_simple,3)
 	fmt.Println(First,Second)
 
+	//18. Extract a slice from a list.
+	fmt.Println("P18: Extract a slice from a list.")
+	//Test
+	sliced := slice(my_string_simple,1,5)
+	fmt.Println(sliced)
 }
 
 // Function declarations
@@ -340,5 +345,14 @@ func split(x StringSlice, n int )(y1 StringSlice, y2 StringSlice){// Problem 17
 		}
 	}
 	return y1, y2
+}
+
+func slice(x StringSlice, min int, max int)(y StringSlice){// Problem 18
+	for count, item := range x{
+		if (count+1)>min && (count+1)<max{
+			y=append(y,item)
+		}
+	}
+	return y
 }
 
