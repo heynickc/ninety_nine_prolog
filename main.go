@@ -2,9 +2,14 @@ package main
 
 import (
 	"fmt"
-
+	"github.com/flatten"
+	"github.com/ninety_nine_prolog/lists"
 )
-
+type StringSlice []string
+type EncodedPair struct {
+	c int
+	s string
+}
 func main() {
 
 	//Welcome message
@@ -13,15 +18,17 @@ func main() {
 	// Variable declarations
 	my_list := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ,11, 12}
 	palli := []int{1,2,3,2,1}
-	/*nested := map[string]interface{}{
+	nested := map[string]interface{}{
 		"a": "b",
 		"c": map[string]interface{}{
 			"d": "e",
 			"f": "g",
 		},
 		"z": 1.4567,
-	}*/
+	}
 	my_chaos := []int{1,1,1,1,1,1,1,1,1,1,13,2,4,3,3,3,3,3,3,3,5,5,5,55,32,12,12,12,12,12,12,12,12,12,34,34,54,45,34,34,45,45,34,34,34,45,45,45,45,45,45}
+	my_chaos_string := []string{"a","a","a","a","a","a","a","a","a","a","a","a","a","a","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","r","f","z"}
+
 	//1. Last element of the list
 	fmt.Println("P01: Last element of the list")
 	//Test
@@ -57,11 +64,15 @@ func main() {
 	//Test
 	id_palindrome(palli)
 
-	/*//7. Flatten a nested map structure
+	//7. Flatten a nested map structure
 	fmt.Println("P07: Flatten a nested map structure")
 	//Test
-	flat := Flatten(nested)
-	fmt.Println(flat)*/
+	flat, _ := flatten.Flatten(nested, "", flatten.DotStyle)
+	fmt.Println(flat)
+
+	//flat, err := flatten.Flatten(nested, "", flatten.RailsStyle)
+	//fmt.Println(flat)
+	//fmt.Println(err)
 
 	//8. Eliminate consecutive duplicates of list elements
 	fmt.Println("P08: Eliminate consecutive duplicates of list elements.")
@@ -70,13 +81,25 @@ func main() {
 	fmt.Println(my_chaos)
 	fmt.Println(clean_list)
 
+
 	//9. Pack Consicutive
-	// fmt.Printf("9. Pack Consicutive")
+	 fmt.Println("9. Pack Consicutive")
 	//Test
-	//
-	//fmt.Println(Packed)
+	pack := Pack(my_chaos_string)
+	fmt.Println(pack)
 
 	//10. Run-length encoding of a list
+	fmt.Println("10. Run-length encoding of a list")
+	//Test
+	compre :=encode(my_chaos_string)
+	fmt.Println(compre)
+
+	//11. Modified run-length encoding
+	fmt.Println("11. Modified Run-length encoding of a list")
+	//Test
+	recomp := mod_encode(my_chaos_string)
+	fmt.Println(recomp)
+
 
 }
 
@@ -133,7 +156,7 @@ func id_palindrome(x []int){// Problem 6
 	}
 }
 
-/*func Flatten(nested []interface{}) (result []string){
+/*func Flatten(nested []interface{}) (result []string){// Problem 7
 	for _, s := range nested {
 		switch i := s.(type) {
 		case string:
@@ -145,7 +168,10 @@ func id_palindrome(x []int){// Problem 6
 	return result
 }*/
 
-func el_consec(x []int)(y []int){
+
+
+
+func el_consec(x []int)(y []int){// Problem 8
 	for i :=0; i<len(x); i++ {
 		if i == 0{
 			y=append(y,x[i])
@@ -160,4 +186,48 @@ func el_consec(x []int)(y []int){
 
 	}
 	return y
+}
+
+func Pack (s StringSlice) (result []StringSlice) { // Problem 9 from cheat sheet
+	var group StringSlice
+	for i, item := range s {
+		if len(group) == 0 {
+			group = append(group, item)
+		} else if last := group[len(group)-1]; item == last {
+			group = append(group, item)
+			if i == len(s)-1 {
+				result = append(result, group)
+			}
+		} else if last := group[len(group)-1]; item != last {
+			result = append(result, group)
+			group = make(StringSlice, 0)
+			group = append(group, item)
+		}
+	}
+	return result
+}
+
+func encode(x StringSlice) (y []EncodedPair) {// Problem 10
+	var compressed []StringSlice
+	compressed = Pack(x)
+	for _, item := range compressed {
+		y = append(y, item.EncodePair())
+	}
+	return y
+}
+
+func (s StringSlice) EncodePair() EncodedPair {
+	var char string
+	var count int
+	char = s[0]
+	for i := 0; i < len(s); i++ {
+		count++
+	}
+	return EncodedPair{count, char}
+}
+
+func mod_encode(x []EncodedPair)(y []EncodedPair){
+for _,item := range x{
+	if y
+	}
 }
