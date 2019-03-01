@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"github.com/flatten"
-	"github.com/ninety_nine_prolog/lists"
 )
 type StringSlice []string
 type EncodedPair struct {
@@ -28,6 +27,9 @@ func main() {
 	}
 	my_chaos := []int{1,1,1,1,1,1,1,1,1,1,13,2,4,3,3,3,3,3,3,3,5,5,5,55,32,12,12,12,12,12,12,12,12,12,34,34,54,45,34,34,45,45,34,34,34,45,45,45,45,45,45}
 	my_chaos_string := []string{"a","a","a","a","a","a","a","a","a","a","a","a","a","a","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","r","f","z"}
+	my_string_simple := []string{"a","b","c","d","e","f"}
+
+	// Testing the functions
 
 	//1. Last element of the list
 	fmt.Println("P01: Last element of the list")
@@ -81,25 +83,54 @@ func main() {
 	fmt.Println(my_chaos)
 	fmt.Println(clean_list)
 
-
 	//9. Pack Consicutive
-	 fmt.Println("9. Pack Consicutive")
+	 fmt.Println("P09: Pack Consicutive")
 	//Test
 	pack := Pack(my_chaos_string)
 	fmt.Println(pack)
 
 	//10. Run-length encoding of a list
-	fmt.Println("10. Run-length encoding of a list")
+	fmt.Println("P10: Run-length encoding of a list")
 	//Test
 	compre :=encode(my_chaos_string)
 	fmt.Println(compre)
 
 	//11. Modified run-length encoding
-	fmt.Println("11. Modified Run-length encoding of a list")
+	fmt.Println("P11: Modified Run-length encoding of a list")
 	//Test
 	recomp := mod_encode(my_chaos_string)
 	fmt.Println(recomp)
 
+	//TODO #2 : Test the first written function after debbug
+	//12. Decode a run-length encoded list
+	fmt.Println("P12: Decode a run-length encoded list")
+	//Test
+	decoded := Decode(recomp)
+	fmt.Println(decoded)
+
+	//14. Duplicate the elements of a list
+	fmt.Println("P14: Element duplication of a list")
+	//Test
+	duble := dupli(my_string_simple)
+	fmt.Println(duble)
+
+	//15. Duplicate the elements of a list for a given number
+	fmt.Println("P15: Duplicate the elements of a list")
+	//Test
+	freewill := dupli_freewill(my_string_simple,4)
+	fmt.Println(freewill)
+
+	//16. Drop every N'th element from a list
+	fmt.Println("P16: Drop every N'th element from a list")
+	//Test
+	dropped := drop(my_string_simple,3)
+	fmt.Println(dropped)
+
+	//17. Split a list into two parts; the length of the first part is given.
+	fmt.Println("P17: Split a list into two parts with the length of the first part")
+	//Test
+	First, Second := split(my_string_simple,3)
+	fmt.Println(First,Second)
 
 }
 
@@ -226,8 +257,88 @@ func (s StringSlice) EncodePair() EncodedPair {
 	return EncodedPair{count, char}
 }
 
-func mod_encode(x []EncodedPair)(y []EncodedPair){
-for _,item := range x{
-	if y
+func mod_encode(x StringSlice)(y []interface{}){ // Problem 11
+	var compressed []StringSlice
+	compressed = Pack(x)
+	for _, item := range compressed{
+		if len(item) != 1 {
+			y = append(y, item.EncodePair())
+		}else{
+			y=append(y,item[0])
+		}
 	}
+	return y
 }
+
+//TODO #1: Find the Difference between the two functions and the reason why we can't range the interface with the first one
+/*func dencode(x interface{})(y StringSlice){ // Problem 12
+	for _,item := range x{
+		switch i := item.(type) {
+		case string:
+			y = append(y, i)
+		case EncodedPair:
+			for j := 0; j < i.c; j++ {
+				y = append(y, i.s)
+			}
+		}
+	}
+	return y
+}*/
+
+func Decode(g []interface{}) StringSlice {// Problem 12 cheat sheet
+	var result StringSlice
+	for _, item := range g {
+		switch i := item.(type) {
+		case string:
+			result = append(result, i)
+		case EncodedPair:
+			for j := 0; j < i.c; j++ {
+				result = append(result, i.s)
+			}
+		}
+	}
+	return result
+}
+
+func dupli(x StringSlice)(y StringSlice){// Problem 14
+	var backup StringSlice
+	backup = x
+	for _,item := range backup{
+		for j:=0;j<2;j++{
+			y=append(y,item)
+		}
+	}
+	return y
+}
+
+func dupli_freewill(x StringSlice, n int)(y StringSlice){// Problem 15
+	var backup StringSlice
+	backup = x
+	for _,item := range backup{
+		for j:=0;j<n;j++{
+			y=append(y,item)
+		}
+	}
+	return y
+}
+
+func drop(x StringSlice,n int)(y StringSlice){// Problem 16
+	for count,item := range x{
+		if (count+1)%n != 0{
+			y=append(y,item)
+		}
+	}
+	return y
+}
+
+func split(x StringSlice, n int )(y1 StringSlice, y2 StringSlice){// Problem 17
+	for count,item := range x{
+		if count<n {
+			y1=append(y1,item)
+		}else{
+			y2=append(y2,item)
+		}
+	}
+	return y1, y2
+}
+
