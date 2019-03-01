@@ -137,6 +137,19 @@ func main() {
 	//Test
 	sliced := slice(my_string_simple,1,5)
 	fmt.Println(sliced)
+
+	//19. Rotate the list as n items
+	fmt.Println("P19: Rotate the list n times to left")
+	//Test
+	rotated := rotate_L(my_string_simple,4)
+	fmt.Println(rotated)
+
+	//20. Remove the K'th element from a list
+	fmt.Println("P20: Remove the K'th element from a list")
+	//Test
+	x, newl := remove_at(my_string_simple,5)
+	fmt.Println(x)
+	fmt.Println(newl)
 }
 
 // Function declarations
@@ -158,6 +171,15 @@ func element_at(k int, x []int)(y int){// Problem 3
 		fmt.Printf("%v\n", y)
 	} else{
 		fmt.Println("You are out of bounds for the given list!")
+	}
+	return y
+}
+
+func element_at_s(k int, x StringSlice)(y StringSlice){// Problem 3.20
+	for count,item := range x{
+		if (count+1) == k {
+			y=append(y,item)
+		}
 	}
 	return y
 }
@@ -356,3 +378,19 @@ func slice(x StringSlice, min int, max int)(y StringSlice){// Problem 18
 	return y
 }
 
+func rotate_L(x StringSlice, n int)(y StringSlice){
+	x1,x2 := split(x,n)
+	for _,item := range x2{
+		y=append(y,item)
+	}
+	for _,item := range x1{
+		y=append(y,item)
+	}
+	return y
+}
+
+func remove_at(x StringSlice,n int)(k StringSlice, y StringSlice){
+	y=drop(x,n)
+	k=element_at_s(n,x)
+	return y,k
+}
