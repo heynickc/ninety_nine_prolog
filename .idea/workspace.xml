@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/main.go" description="&#10;func el_consec(x []int)(y []int){&#10;&#9;for i :=0; i&lt;l..." line="25" />
+    <bookmark url="file://$PROJECT_DIR$/main.go" description="&#10;func el_consec(x []int)(y []int){&#10;&#9;for i :=0; i&lt;l..." line="27" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0c4942b2-6336-498e-892d-9afe37575c23" name="Default Changelist" comment="">
@@ -18,8 +18,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lists/lists.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret line="228" column="38" selection-start-line="228" selection-start-column="38" selection-end-line="228" selection-end-column="38" />
+            <state relative-caret-position="1018">
+              <caret line="538" column="33" selection-start-line="538" selection-start-column="33" selection-end-line="538" selection-end-column="33" />
             </state>
           </provider>
         </entry>
@@ -27,8 +27,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="5" column="1" selection-start-line="5" selection-start-column="1" selection-end-line="5" selection-end-column="1" />
+            <state relative-caret-position="423">
+              <caret line="508" column="4" selection-start-line="508" selection-start-column="4" selection-end-line="508" selection-end-column="4" />
               <folding>
                 <element signature="e#14#53#0" expanded="true" />
               </folding>
@@ -245,13 +245,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lists/lists.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="228" column="38" selection-start-line="228" selection-start-column="38" selection-end-line="228" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://C:/Go/src/fmt/print.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="131">
@@ -259,10 +252,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/LICENSE">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lists/lists.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1018">
+          <caret line="538" column="33" selection-start-line="538" selection-start-column="33" selection-end-line="538" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/main.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="1" selection-start-line="5" selection-start-column="1" selection-end-line="5" selection-end-column="1" />
+        <state relative-caret-position="423">
+          <caret line="508" column="4" selection-start-line="508" selection-start-column="4" selection-end-line="508" selection-end-column="4" />
           <folding>
             <element signature="e#14#53#0" expanded="true" />
           </folding>

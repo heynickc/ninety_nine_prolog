@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"github.com/flatten"
+	"math/rand"
+	"time"
 )
 type StringSlice []string
 type EncodedPair struct {
@@ -28,6 +30,8 @@ func main() {
 	my_chaos := []int{1,1,1,1,1,1,1,1,1,1,13,2,4,3,3,3,3,3,3,3,5,5,5,55,32,12,12,12,12,12,12,12,12,12,34,34,54,45,34,34,45,45,34,34,34,45,45,45,45,45,45}
 	my_chaos_string := []string{"a","a","a","a","a","a","a","a","a","a","a","a","a","a","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","r","f","z"}
 	my_string_simple := []string{"a","b","c","d","e","f","g","h","i","j","k","l","m","n"}
+	my_workers := []string{"aldo","beat","carla","david","evi","flip","gary","hugo","ida"}
+	my_sublisted := [][]string{{"a","b","c"},{"d","e"},{"f","g","h"},{"d","e"},{"i","j","k","l"},{"m","n"},{"o"}}
 
 	// Testing the functions
 
@@ -150,7 +154,59 @@ func main() {
 	x, newl := remove_at(my_string_simple,5)
 	fmt.Println(x)
 	fmt.Println(newl)
-}
+
+	//21. Insert an element at a given position into a list
+	fmt.Println("P21: Insert an element at a given position into a list")
+	//Test
+	yeni := insert_at(my_string_simple,3,"n")
+	fmt.Println(yeni)
+
+	//22. Create a list containing all integers within a given range
+	fmt.Println("P22: Create a list containing all integers within a given range")
+	//Test
+	my_int_list := range_int(4,19)
+	fmt.Println(my_int_list)
+
+	//23. Extract a given number of randomly selected elements from a list
+	fmt.Println("P23: Extract a given number of randomly selected elements from a list")
+	//Test
+	rnd_ext := rnd_select(my_string_simple,3)
+	fmt.Println(rnd_ext)
+
+	//24. Lotto: Draw N different random numbers from the set 1..m
+	fmt.Println("P24: Lotto")
+	//Test
+	results := lotto()
+	fmt.Println(results)
+
+	//25. Generate a random permutation of the elements of a list
+	fmt.Println("P25: Generate a random permutation of the elements of a list")
+	//Test
+	L := rnd_permu(my_string_simple)
+	fmt. Println(L)
+
+	//26. Generate the combinations of K distinct objects chosen from the N elements of a list
+	fmt.Println("P26: Generate the combination of K distinct objects chosen from the N elements of a list")
+	//Test
+	combo := combination(my_string_simple, 3)
+	fmt.Println(combo)
+
+	//27. Group the elements of a set into disjoint subsets
+	fmt.Println("P27: Group the element of a set into disjoint subsets")
+	//Test
+	G1,G2,G3 := group3(my_workers,2,2,5)
+	fmt.Println(G1)
+	fmt.Println(G2)
+	fmt.Println(G3)
+
+	//28. Sorting a list of lists according to length of sublists
+	fmt.Println("P28: Sorting a list of lists according to length of sublists")
+	//Test
+	len_sorted := lsort(my_sublisted)
+	fmt.Println(len_sorted)
+
+
+	}
 
 // Function declarations
 func my_last(x []int)(y int){ // Problem 1
@@ -378,7 +434,7 @@ func slice(x StringSlice, min int, max int)(y StringSlice){// Problem 18
 	return y
 }
 
-func rotate_L(x StringSlice, n int)(y StringSlice){
+func rotate_L(x StringSlice, n int)(y StringSlice){// Problem 19
 	x1,x2 := split(x,n)
 	for _,item := range x2{
 		y=append(y,item)
@@ -389,8 +445,67 @@ func rotate_L(x StringSlice, n int)(y StringSlice){
 	return y
 }
 
-func remove_at(x StringSlice,n int)(k StringSlice, y StringSlice){
+func remove_at(x StringSlice,n int)(k StringSlice, y StringSlice){// Problem 20
 	y=drop(x,n)
 	k=element_at_s(n,x)
 	return y,k
+}
+
+func insert_at(x StringSlice, n int,s string)(y StringSlice){// Problem 21
+	y = append(x[:n-1], append([]string{s}, x[n-1:]...)...)
+	return y
+}
+
+func range_int(x int, y int)(z []int){// Problem 22
+	for i:=x;i<y+1;i++{
+		z=append(z,i)
+	}
+	return z
+}
+
+func rnd_select(x StringSlice, n int)(y StringSlice){ // Problem 23
+	r := rand.New(rand.NewSource(time.Now().UnixNano()))
+	for i := 0; i < n; i++ {
+		y = append(y, x[r.Intn(len(x))])
+	}
+	return y
+}
+
+func lotto()(y []int){ // Problem 24
+	var x []int
+	x=range_int(1,49)
+	r := rand.New(rand.NewSource(time.Now().UnixNano()))
+	for i:=0; i<6; i++{
+		y=append(y,x[r.Intn(len(x))])
+	}
+	return y
+}
+
+func rnd_permu(x StringSlice)(y StringSlice){ // Problem 25
+	r := rand.New(rand.NewSource(time.Now().UnixNano()))
+	var perm []int
+	perm = r.Perm(len(x))
+	for _, index := range perm {
+		y = append(y, x[index])
+	}
+	return y
+}
+
+func combination(x StringSlice, n int)(y StringSlice){ // Problem 26
+	r := rand.New(rand.NewSource(time.Now().UnixNano()))
+	for i:=0;i<n;i++{
+		y=append(y,x[r.Intn(len(x))])
+	}
+	return y
+}
+
+func group3(x StringSlice,k int, l int, n int)(G1 StringSlice, G2 StringSlice, G3 StringSlice){
+	G1,G2 = split(x,k)
+	G2,G3 = split(G2,l)
+	return G1, G2, G3
+}
+
+func lsort(x []StringSlice)(y []StringSlice){
+
+	return y
 }
