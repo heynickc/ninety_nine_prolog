@@ -6,11 +6,14 @@ import (
 	"math/rand"
 	"time"
 )
+
+// Type declaration
 type StringSlice []string
 type EncodedPair struct {
 	c int
 	s string
 }
+
 func main() {
 
 	//Welcome message
@@ -31,7 +34,7 @@ func main() {
 	my_chaos_string := []string{"a","a","a","a","a","a","a","a","a","a","a","a","a","a","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","r","f","z"}
 	my_string_simple := []string{"a","b","c","d","e","f","g","h","i","j","k","l","m","n"}
 	my_workers := []string{"aldo","beat","carla","david","evi","flip","gary","hugo","ida"}
-	my_sublisted := [][]string{{"a","b","c"},{"d","e"},{"f","g","h"},{"d","e"},{"i","j","k","l"},{"m","n"},{"o"}}
+	my_sublisted := []StringSlice{{"a","b","c"},{"d","e"},{"f","g","h"},{"d","e"},{"i","j","k","l"},{"m","n"},{"o"}}
 
 	// Testing the functions
 
@@ -499,13 +502,33 @@ func combination(x StringSlice, n int)(y StringSlice){ // Problem 26
 	return y
 }
 
-func group3(x StringSlice,k int, l int, n int)(G1 StringSlice, G2 StringSlice, G3 StringSlice){
+func group3(x StringSlice,k int, l int, n int)(G1 StringSlice, G2 StringSlice, G3 StringSlice){// Problem 27
 	G1,G2 = split(x,k)
 	G2,G3 = split(G2,l)
 	return G1, G2, G3
 }
 
-func lsort(x []StringSlice)(y []StringSlice){
+func lsort(x []StringSlice)(y []StringSlice){ // Problem 28
 
+	var tok StringSlice
+	for _, item := range x {
+		y = append(y, item)
+		if len(y) != 1 {
+			for i := 0; i < len(y); i++ {
+				for j:= 0; j < len(y); j++{
+					if (len(y[i])<len(y[j]))&&(i>j) {
+						tok = y[i]
+						y[i]=y[j]
+						y[j]=tok
+					}
+					if (len(y[i])>len(y[j]))&&(j>i){
+						tok = y[i]
+						y[i]=y[j]
+						y[j]=tok
+					}
+				}
+			}
+		}
+	}
 	return y
 }

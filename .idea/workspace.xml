@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/main.go" description="&#10;func el_consec(x []int)(y []int){&#10;&#9;for i :=0; i&lt;l..." line="27" />
+    <bookmark url="file://$PROJECT_DIR$/main.go" description="&#10;func el_consec(x []int)(y []int){&#10;&#9;for i :=0; i&lt;l..." line="30" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0c4942b2-6336-498e-892d-9afe37575c23" name="Default Changelist" comment="">
@@ -27,8 +27,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="423">
-              <caret line="508" column="4" selection-start-line="508" selection-start-column="4" selection-end-line="508" selection-end-column="4" />
+            <state relative-caret-position="8993">
+              <caret line="529" column="13" lean-forward="true" selection-start-line="529" selection-start-column="13" selection-end-line="529" selection-end-column="13" />
               <folding>
                 <element signature="e#14#53#0" expanded="true" />
               </folding>
@@ -264,8 +264,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="423">
-          <caret line="508" column="4" selection-start-line="508" selection-start-column="4" selection-end-line="508" selection-end-column="4" />
+        <state relative-caret-position="8993">
+          <caret line="529" column="13" lean-forward="true" selection-start-line="529" selection-start-column="13" selection-end-line="529" selection-end-column="13" />
           <folding>
             <element signature="e#14#53#0" expanded="true" />
           </folding>
