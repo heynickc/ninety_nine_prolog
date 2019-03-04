@@ -38,6 +38,8 @@ func main() {
 
 	// Testing the functions
 
+	//Lists
+	fmt.Println("List Functions:")
 	//1. Last element of the list
 	fmt.Println("P01: Last element of the list")
 	//Test
@@ -208,8 +210,38 @@ func main() {
 	len_sorted := lsort(my_sublisted)
 	fmt.Println(len_sorted)
 
+	//Arithmetic Functions:
+	fmt.Println("Arithmetic functions:")
+
+	//P31: Determine whether a given integer number is prime.
+	fmt.Println("Determine whether a given integer number is prime")
+	//Test
+	fmt.Println(is_prime(7))
+	fmt.Println(is_prime(2))
+	fmt.Println(is_prime(15))
+	fmt.Println(is_prime(0))
+	fmt.Println(is_prime(151))
+	fmt.Println(is_prime(113))
+	fmt.Println(is_prime(1))
+
+	//P32: Determine the greatest common divisor of two positive integer numbers
+	fmt.Println("Determine the greatest common divisor of two positive integer numbers")
+	//Test
+	fmt.Println(gcd(63,36))
+
+	//P33: Determine whether two positive integer numbers are comprime
+	fmt.Println("Determine two positive integer numbers are coprime")
+	//Test
+	fmt.Println(coprime(35,64))
+
+	//P34: Calculate Euler's totient fucntion phi(m)
+	fmt.Println("Calculate Euler's totient function phi(m)")
+	//Test
+	fmt.Println(phi(10))
+
 
 	}
+
 
 // Function declarations
 func my_last(x []int)(y int){ // Problem 1
@@ -532,3 +564,64 @@ func lsort(x []StringSlice)(y []StringSlice){ // Problem 28
 	}
 	return y
 }
+
+func is_prime(n int)(token bool) {// Problem 31
+	if n == 1 || n == 0 || n == 2{
+		return false
+	} else {
+		for i := 2; i < n+1; i++ {
+
+				if (n%i == 0) && (i != n){
+					return false
+				}
+
+		}
+		return true
+	}
+}
+
+func gcd(n int, m int)(y int) {// Problem 32
+	com := 1
+	k := n
+	l := m
+
+	for k != 1 || l != 1 {
+		for i := 0; i < m; i++ {
+			if is_prime(i) {
+				if k%i == 0 && l%i == 0 {
+					com = com * i
+					k = k / i
+					l = l / i
+					break
+				} else if k%i == 0 && l%i != 0 {
+					k= k / i
+					break
+				} else if k%i != 0 && l%i == 0 {
+					l = l / i
+					break
+				} else if k == 1 || l == 1 {
+					return com
+				}
+			}
+		}
+	}
+	return com
+}
+
+func coprime(n int, m int)(result bool){// Problem 33
+	if gcd(n,m) == 1{
+		return true
+	}else{
+		return false
+	}
+}
+
+func phi(m int)(y int){// Problem 34
+	for i:=1;i<m;i++{
+		if coprime(i,m){
+			y++
+		}
+	}
+	return y
+}
+
