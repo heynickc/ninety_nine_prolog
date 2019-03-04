@@ -20,8 +20,8 @@ func main() {
 	fmt.Printf("This is a golang solution for 99 Problems of Prolog \n")
 
 	// Variable declarations
-	my_list := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ,11, 12}
-	palli := []int{1,2,3,2,1}
+	my_list := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12}
+	palli := []int{1, 2, 3, 2, 1}
 	nested := map[string]interface{}{
 		"a": "b",
 		"c": map[string]interface{}{
@@ -30,11 +30,11 @@ func main() {
 		},
 		"z": 1.4567,
 	}
-	my_chaos := []int{1,1,1,1,1,1,1,1,1,1,13,2,4,3,3,3,3,3,3,3,5,5,5,55,32,12,12,12,12,12,12,12,12,12,34,34,54,45,34,34,45,45,34,34,34,45,45,45,45,45,45}
-	my_chaos_string := []string{"a","a","a","a","a","a","a","a","a","a","a","a","a","a","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","r","f","z"}
-	my_string_simple := []string{"a","b","c","d","e","f","g","h","i","j","k","l","m","n"}
-	my_workers := []string{"aldo","beat","carla","david","evi","flip","gary","hugo","ida"}
-	my_sublisted := []StringSlice{{"a","b","c"},{"d","e"},{"f","g","h"},{"d","e"},{"i","j","k","l"},{"m","n"},{"o"}}
+	my_chaos := []int{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 13, 2, 4, 3, 3, 3, 3, 3, 3, 3, 5, 5, 5, 55, 32, 12, 12, 12, 12, 12, 12, 12, 12, 12, 34, 34, 54, 45, 34, 34, 45, 45, 34, 34, 34, 45, 45, 45, 45, 45, 45}
+	my_chaos_string := []string{"a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "b", "b", "b", "b", "b", "b", "b", "b", "b", "b", "b", "b", "b", "b", "b", "b", "b", "c", "c", "c", "c", "c", "c", "c", "c", "c", "c", "c", "c", "c", "c", "c", "c", "c", "c", "c", "c", "c", "c", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "r", "f", "z"}
+	my_string_simple := []string{"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n"}
+	my_workers := []string{"aldo", "beat", "carla", "david", "evi", "flip", "gary", "hugo", "ida"}
+	my_sublisted := []StringSlice{{"a", "b", "c"}, {"d", "e"}, {"f", "g", "h"}, {"d", "e"}, {"i", "j", "k", "l"}, {"m", "n"}, {"o"}}
 
 	// Testing the functions
 
@@ -44,7 +44,7 @@ func main() {
 	fmt.Println("P01: Last element of the list")
 	//Test
 	last := my_last(my_list)
-	fmt.Printf("%v \n",last)
+	fmt.Printf("%v \n", last)
 
 	//2. Zweiletztes element
 	fmt.Println("P02: Zweiletztes element")
@@ -55,8 +55,8 @@ func main() {
 	//3. K'th element
 	fmt.Println("P03: K'th element")
 	//Test
-	kth := element_at(4,my_list)
-	fmt.Printf("4th is:%v \n",kth)
+	kth := element_at(4, my_list)
+	fmt.Printf("4th is:%v \n", kth)
 
 	//4. Number of elements of a list
 	fmt.Println("P04: Number of elements")
@@ -93,7 +93,7 @@ func main() {
 	fmt.Println(clean_list)
 
 	//9. Pack Consicutive
-	 fmt.Println("P09: Pack Consicutive")
+	fmt.Println("P09: Pack Consicutive")
 	//Test
 	pack := Pack(my_chaos_string)
 	fmt.Println(pack)
@@ -101,7 +101,7 @@ func main() {
 	//10. Run-length encoding of a list
 	fmt.Println("P10: Run-length encoding of a list")
 	//Test
-	compre :=encode(my_chaos_string)
+	compre := encode(my_chaos_string)
 	fmt.Println(compre)
 
 	//11. Modified run-length encoding
@@ -126,56 +126,56 @@ func main() {
 	//15. Duplicate the elements of a list for a given number
 	fmt.Println("P15: Duplicate the elements of a list")
 	//Test
-	freewill := dupli_freewill(my_string_simple,4)
+	freewill := dupli_freewill(my_string_simple, 4)
 	fmt.Println(freewill)
 
 	//16. Drop every N'th element from a list
 	fmt.Println("P16: Drop every N'th element from a list")
 	//Test
-	dropped := drop(my_string_simple,3)
+	dropped := drop(my_string_simple, 3)
 	fmt.Println(dropped)
 
 	//17. Split a list into two parts; the length of the first part is given.
 	fmt.Println("P17: Split a list into two parts with the length of the first part")
 	//Test
-	First, Second := split(my_string_simple,3)
-	fmt.Println(First,Second)
+	First, Second := split(my_string_simple, 3)
+	fmt.Println(First, Second)
 
 	//18. Extract a slice from a list.
 	fmt.Println("P18: Extract a slice from a list.")
 	//Test
-	sliced := slice(my_string_simple,1,5)
+	sliced := slice(my_string_simple, 1, 5)
 	fmt.Println(sliced)
 
 	//19. Rotate the list as n items
 	fmt.Println("P19: Rotate the list n times to left")
 	//Test
-	rotated := rotate_L(my_string_simple,4)
+	rotated := rotate_L(my_string_simple, 4)
 	fmt.Println(rotated)
 
 	//20. Remove the K'th element from a list
 	fmt.Println("P20: Remove the K'th element from a list")
 	//Test
-	x, newl := remove_at(my_string_simple,5)
+	x, newl := remove_at(my_string_simple, 5)
 	fmt.Println(x)
 	fmt.Println(newl)
 
 	//21. Insert an element at a given position into a list
 	fmt.Println("P21: Insert an element at a given position into a list")
 	//Test
-	yeni := insert_at(my_string_simple,3,"n")
+	yeni := insert_at(my_string_simple, 3, "n")
 	fmt.Println(yeni)
 
 	//22. Create a list containing all integers within a given range
 	fmt.Println("P22: Create a list containing all integers within a given range")
 	//Test
-	my_int_list := range_int(4,19)
+	my_int_list := range_int(4, 19)
 	fmt.Println(my_int_list)
 
 	//23. Extract a given number of randomly selected elements from a list
 	fmt.Println("P23: Extract a given number of randomly selected elements from a list")
 	//Test
-	rnd_ext := rnd_select(my_string_simple,3)
+	rnd_ext := rnd_select(my_string_simple, 3)
 	fmt.Println(rnd_ext)
 
 	//24. Lotto: Draw N different random numbers from the set 1..m
@@ -188,7 +188,7 @@ func main() {
 	fmt.Println("P25: Generate a random permutation of the elements of a list")
 	//Test
 	L := rnd_permu(my_string_simple)
-	fmt. Println(L)
+	fmt.Println(L)
 
 	//26. Generate the combinations of K distinct objects chosen from the N elements of a list
 	fmt.Println("P26: Generate the combination of K distinct objects chosen from the N elements of a list")
@@ -199,7 +199,7 @@ func main() {
 	//27. Group the elements of a set into disjoint subsets
 	fmt.Println("P27: Group the element of a set into disjoint subsets")
 	//Test
-	G1,G2,G3 := group3(my_workers,2,2,5)
+	G1, G2, G3 := group3(my_workers, 2, 2, 5)
 	fmt.Println(G1)
 	fmt.Println(G2)
 	fmt.Println(G3)
@@ -214,7 +214,7 @@ func main() {
 	fmt.Println("Arithmetic functions:")
 
 	//P31: Determine whether a given integer number is prime.
-	fmt.Println("Determine whether a given integer number is prime")
+	fmt.Println("P31: Determine whether a given integer number is prime")
 	//Test
 	fmt.Println(is_prime(7))
 	fmt.Println(is_prime(2))
@@ -225,23 +225,35 @@ func main() {
 	fmt.Println(is_prime(1))
 
 	//P32: Determine the greatest common divisor of two positive integer numbers
-	fmt.Println("Determine the greatest common divisor of two positive integer numbers")
+	fmt.Println("P32: Determine the greatest common divisor of two positive integer numbers")
 	//Test
-	fmt.Println(gcd(63,36))
+	fmt.Println(gcd(63, 36))
 
 	//P33: Determine whether two positive integer numbers are comprime
-	fmt.Println("Determine two positive integer numbers are coprime")
+	fmt.Println("P33: Determine two positive integer numbers are coprime")
 	//Test
-	fmt.Println(coprime(35,64))
+	fmt.Println(coprime(35, 64))
 
 	//P34: Calculate Euler's totient fucntion phi(m)
-	fmt.Println("Calculate Euler's totient function phi(m)")
+	fmt.Println("P34: Calculate Euler's totient function phi(m)")
 	//Test
 	fmt.Println(phi(10))
 
+	//P35: Determine the prime factors of a given positive integer
+	fmt.Println("P35: Determine the prime factors of a given positive integer")
+	//Test
+	fmt.Println(prime_factors(315))
 
-	}
+	//P36: Determine the prime factors of a given positive integer
+	fmt.Println("P36: Determine the prime factors of a given positive intteger(2)")
+	//Test
+	fmt.Println(prime_factors_mult(prime_factors(315)))
 
+	//P37: Calculate Euler's totient function phi(m)(improved)
+	fmt.Println("Calculate Euler's toient function phi(m) (improved)")
+	//Test
+
+}
 
 // Function declarations
 func my_last(x []int)(y int){ // Problem 1
@@ -587,7 +599,7 @@ func gcd(n int, m int)(y int) {// Problem 32
 
 	for k != 1 || l != 1 {
 		for i := 0; i < m; i++ {
-			if is_prime(i) {
+			if is_prime(i) || i == 2 {
 				if k%i == 0 && l%i == 0 {
 					com = com * i
 					k = k / i
@@ -625,3 +637,41 @@ func phi(m int)(y int){// Problem 34
 	return y
 }
 
+func prime_factors(n int)(y []int){// Problem 35
+	for n != 1{
+		for i:=0;i<n+1;i++{
+			if is_prime(i){
+				if n%i == 0 {
+					y=append(y,i)
+					n=n/i
+					break
+				}
+			}
+		}
+	}
+return
+}
+
+func prime_factors_mult(x []int)(y [][]int){// Problem 36
+
+	var k [][]int
+	for _,item := range x{
+		tok := 0
+		for i:=0;i<len(x);i++{
+			if item == x[i]{
+				tok++
+			}
+		}
+		k=append(k,[]int{item, tok})
+	}
+	y=append(y,k[0])
+	for j:=1;j<len(k);j++{
+		for i:=0;i<len(k);i++{
+			if k[j][0] != y[i][0]{
+				y = append(y,k[j])
+				break
+			}else{break}
+		}
+	}
+	return
+}
